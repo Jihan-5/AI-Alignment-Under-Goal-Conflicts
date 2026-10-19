@@ -12,7 +12,12 @@ set -euo pipefail
 PY="${PYTHON:-python3}"
 echo "== python: $($PY --version)"
 
-if [ ! -d .venv ]; then $PY -m venv .venv; fi
+if [ ! -d .venv ] && ! $PY -m venv .venv 2>/dev/null; then
+  # Some GPU images ship Python without the venv module; uv can create one instead.
+  rm -rf .venv
+  command -v uv >/dev/null || { curl -LsSf https://astral.sh/uv/install.sh | sh; export PATH="$HOME/.local/bin:$PATH"; }
+  uv venv --seed -p "$PY" .venv
+fi
 source .venv/bin/activate
 pip install -q -U pip
 pip install -q -e ".[train,dev]"

@@ -27,6 +27,30 @@ gantt
 
 **Answer: about 3 working days of active work on one A100/H100 (roughly 9–18 GPU-hours of compute), plus 1–2 days of buffer, so plan for ~5 days.** On a 24 GB card (L4/A10G), plan for ~7 days.
 
+## 0. Getting a GPU (first time)
+
+A laptop cannot run this study; you rent a machine with an NVIDIA H100 by the hour and run the study on it from your browser. Example with RunPod (Lambda and Vast.ai work the same way; prices move, check the provider's page):
+
+1. Make an account at runpod.io and add about $30–40 of credit (an H100 is roughly $2–3 per hour; the study needs about 4–10 hours).
+2. **Pods → Deploy.** Pick a GPU with **H100 80GB**, the **RunPod PyTorch** template, and under *Edit template* set **Container disk 50 GB** and **Volume disk 100 GB**. Deploy *On-Demand*.
+3. When the pod is running: **Connect → Jupyter Lab**, then *File → New → Terminal*. You now have a shell on the H100 (you are `root`; no `sudo` needed).
+4. In that terminal:
+
+   ```bash
+   cd /workspace                                   # the volume: survives pod restarts
+   git clone -b claude/festive-goldberg-33mhfu https://github.com/Jihan-5/AI-Alignment-Under-Goal-Conflicts
+   cd AI-Alignment-Under-Goal-Conflicts
+   nvidia-smi                                      # must list an H100
+   apt-get update && apt-get install -y tmux gh
+   gh auth login && gh auth setup-git              # GitHub.com, HTTPS, "Login with a web browser": enter the code on your laptop
+   tmux new -s lab 'bash scripts/run_today.sh; bash'
+   ```
+
+5. Close the browser tab whenever you like; the run continues. To look again: reopen the terminal and `tmux attach -t lab`.
+6. When it is done and the results are pushed, download anything else you want to keep (`tar czf runs.tgz runs/`, then right-click → Download in Jupyter), and **Terminate** the pod. A stopped pod still bills for its disk; a terminated one bills nothing.
+
+The frozen splits regenerate byte-identically on Python 3.11, 3.12 and 3.13 (checked), so any recent PyTorch image works.
+
 ## 1a. One-day mode on one H100 (chosen 19 Oct)
 
 The owner has an H100 and wants the study finished in one day. One command runs everything, resumably:

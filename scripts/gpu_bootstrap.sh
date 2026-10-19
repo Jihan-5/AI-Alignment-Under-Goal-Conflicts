@@ -51,7 +51,7 @@ echo "== autopilot machinery check on the tiny model (CPU-sized, ~10 min)"
 override-lab autopilot --smoke --until E6
 
 echo "== measure this machine and project the schedule"
-override-lab profile --model-config configs/models/qwen2.5-1.5b.yaml
+override-lab profile --model-config configs/models/qwen2.5-1.5b.yaml ${PROFILE_ARGS:-}
 
 cat <<'EOF'
 

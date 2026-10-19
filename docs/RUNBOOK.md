@@ -27,6 +27,36 @@ gantt
 
 **Answer: about 3 working days of active work on one A100/H100 (roughly 9–18 GPU-hours of compute), plus 1–2 days of buffer, so plan for ~5 days.** On a 24 GB card (L4/A10G), plan for ~7 days.
 
+## 1a. One-day mode on one H100 (chosen 19 Oct)
+
+The owner has an H100 and wants the study finished in one day. One command runs everything, resumably:
+
+```bash
+git clone -b claude/festive-goldberg-33mhfu https://github.com/Jihan-5/AI-Alignment-Under-Goal-Conflicts
+cd AI-Alignment-Under-Goal-Conflicts
+gh auth login                                        # optional: lets the run push progress snapshots
+tmux new -s lab 'bash scripts/run_today.sh; bash'    # detach Ctrl-b d, reattach: tmux attach -t lab
+```
+
+| Stage | What runs | Projected on one H100 |
+|---|---|---|
+| bootstrap | install, CUDA check, tests, byte-identical splits, datasets, budgets, smoke, profile at `gpu80` settings | 0.5–1 h |
+| E3 | M0 dev, competence gate, M1, organism ladder, M2-ctrl, drift | 0.6–1.5 h |
+| E4 | A0 reference, 12 SFT runs + 3 DPO runs, selection, seeds 23/47, power check | 2.4–5.5 h |
+| E5–E6 | prereg lock, locked test, sampling, prefill, guard replay, trace check, analysis | 0.4–2.4 h |
+| **total** | | **≈ 4–10 h** |
+
+The lower bound assumes the `gpu80` batches reach ~40k training tokens/s and ~250 decisions/s; the upper bound is the original A100-style estimate. The bootstrap's profile prints the measured numbers within the first hour.
+
+What one-day mode changes (both logged in `docs/PREREGISTRATION.md` before the lock):
+
+- **No pause at decision 2.** E4 runs straight into the lock and the locked test. The test keeps 500 roots per stratum; the dev power check is reported with the results, and an underpowered contrast is reported as inconclusive.
+- **`--scale gpu80`.** Micro-batch 8 × accumulation 4 and larger evaluation batches. The experiment is the same (A-TRAIN-13).
+
+What it does **not** change: the autopilot still stops at every predeclared stop condition (§5), e.g. if the organism does not form. That is a result, not a failure. If the bootstrap runs out of memory at `gpu80`, run `SCALE=default bash scripts/run_today.sh` (slower, same experiment).
+
+After each stage a snapshot (state file, budgets, profile, last 200 log lines; no weights or traces) is committed to `results/progress/` and pushed when the machine can push. Before shutting the machine down, keep `runs/` (adapters and traces): `tar czf override_lab_runs.tgz runs/`.
+
 ## 2. How we go about it (recommended route)
 
 | Step | Who | What |
@@ -34,7 +64,7 @@ gantt
 | 1 | **you** | ~~Answer the open questions~~ done 19 Oct (§6). |
 | 2 | **you** | Rent one GPU machine (§3) with Ubuntu, CUDA drivers, Python 3.10+ and outbound internet (PyPI, huggingface.co, github.com). |
 | 3 | **you** | On that machine: install Claude Code, `git clone -b claude/festive-goldberg-33mhfu https://github.com/Jihan-5/AI-Alignment-Under-Goal-Conflicts`, `cd` into it, run `claude remote-control`. The session appears in your Claude Code app; open it and tell it to continue the Override Lab runbook. |
-| 4 | **Claude** (on the GPU box) | `bash scripts/gpu_bootstrap.sh`: install, CUDA check, 287 tests, regenerate the splits and confirm they are byte-identical to the committed manifest, build datasets, real token budgets, pin the model revision, autopilot smoke, **measure the machine and print the projected schedule**. |
+| 4 | **Claude** (on the GPU box) | `bash scripts/gpu_bootstrap.sh`: install, CUDA check, 289 tests, regenerate the splits and confirm they are byte-identical to the committed manifest, build datasets, real token budgets, pin the model revision, autopilot smoke, **measure the machine and print the projected schedule**. |
 | 5 | **Claude** | `override-lab autopilot --until E3`, then report the organism result (decision 1). |
 | 6 | **Claude** | `override-lab autopilot --until E4` (overnight); report dev results, selections and the power check (decision 2). |
 | 7 | **you + Claude** | Decide on test size; `override-lab autopilot --until E6` (locks the preregistration, then runs the locked test and analysis). |
@@ -110,7 +140,7 @@ Decided by the project owner on 19 Oct 2026. Items 1 and 2 match the code's defa
 | 1 | Held-out family definition | **Held out from repair only.** `priority_revision` and `untrusted` stay out of repair data and repair selection; organism construction still uses them. No stricter "never trained on" family. | none (default, A-SPLIT-2) |
 | 2 | Organism restriction set | **All four rules.** The organism breaks reserve, review, hold and handoff. | none (default, A-GEN-5) |
 | 3 | Compute route | **Rent a GPU + Remote Control.** | §2 steps 2–3 |
-| 4 | GPU | **1× A100 80 GB.** | §3 row 2: ≈ 18 GPU-hours, ~5 calendar days incl. buffer |
+| 4 | GPU | **1× A100 80 GB**, changed the same day to **1× H100** with the goal of finishing in one day. | §1a one-day mode: ≈ 4–10 h projected |
 | 5 | Licence | *still open*; not needed to run the study, needed before making the repository public. | none |
 
 Locked-test size (ASSUMPTIONS open question 4) is decided at decision 2 from the dev power check, as planned.

@@ -351,14 +351,14 @@ def cmd_profile(a: argparse.Namespace) -> int:
 
 
 def cmd_autopilot(a: argparse.Namespace) -> int:
-    from .autopilot import Autopilot, AutopilotStop, Scale
+    from .autopilot import Autopilot, AutopilotStop, scale_preset
 
     if a.smoke:
         from .smoke import run_autopilot_smoke
 
         _dump(run_autopilot_smoke(a.runs if a.runs != "runs" else "smoke_autopilot", a.until))
         return 0
-    ap = Autopilot(a.model_config, a.frozen, a.sft, a.runs, a.prereg, scale=Scale(device=a.device), allow_unlocked=a.allow_unlocked)
+    ap = Autopilot(a.model_config, a.frozen, a.sft, a.runs, a.prereg, scale=scale_preset(a.scale, a.device), allow_unlocked=a.allow_unlocked)
     try:
         _dump(ap.run(until=a.until, start=a.start))
     except AutopilotStop as e:
@@ -552,6 +552,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--prereg", default="configs/prereg.yaml")
     s.add_argument("--device")
     s.add_argument("--allow-unlocked", action="store_true")
+    s.add_argument("--scale", default="default", choices=["default", "gpu80"],
+                   help="gpu80: larger batches for one 80 GB GPU (H100 / A100-80GB); same experiment")
     s.add_argument("--smoke", action="store_true", help="tiny random model on CPU, relaxed gates (tests the machinery only)")
     s.set_defaults(fn=cmd_autopilot)
 

@@ -55,4 +55,5 @@ A repair arm "works on held-out families" if its test_family attempted-violation
 ## Deviation log
 | Date | Deviation | Reason | Effect on claims |
 |---|---|---|---|
-| — | — | — | — |
+| 2026-10-19 (before lock) | One-day mode: E4 → E6 run without the decision-2 pause; `test_family` stays at the preregistered 500 roots per stratum. | Owner chose to finish on one H100 in one day. | The dev power check (`E4.power_check`) is reported next to the results; an underpowered contrast is reported as inconclusive, not as "no effect". |
+| 2026-10-19 (before lock) | `--scale gpu80`: micro-batch 8 × accumulation 4 (was 4 × 8), larger evaluation batches (A-TRAIN-13). | Throughput on an 80 GB GPU. | None intended: effective batch, loss normalisation and all rules unchanged; same setting for every arm. |

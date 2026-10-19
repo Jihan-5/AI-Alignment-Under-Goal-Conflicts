@@ -103,7 +103,7 @@ bash scripts/run_pipeline.sh E0
 
 Each test stratum isolates **one** shift, so a result can be attributed to it. `test_family` is "held out" relative to *repair* (A-SPLIT-2): those families appear in M1/M2 construction so the organism actually exhibits the behavior there. Otherwise the held-out test would hit a floor.
 
-**Acceptance criteria.** 287/287 tests pass; `handcheck` passes (82 assertions); leakage audit passes; `verify-splits --regenerate 20` byte-identical; the model's resolved commit is pasted into `configs/models/*.yaml: revision`.
+**Acceptance criteria.** 289/289 tests pass; `handcheck` passes (82 assertions); leakage audit passes; `verify-splits --regenerate 20` byte-identical; the model's resolved commit is pasted into `configs/models/*.yaml: revision`.
 
 **Power check (before freezing test sizes; S04).** `override-lab power` gives exact McNemar power for assumed discordance rates. With 500 paired roots, discordance 10%/3% gives 99% power, but 8%/4% gives only ~70% (≈ 620 roots needed for 80%). **Action:** after E4, estimate the A3-vs-A2 discordance on `dev_repair` and, *before* `prereg lock`, increase `test_family.n_roots` if the planned 500 is underpowered for the smallest effect worth reporting. Changing sizes after the lock is a reportable deviation.
 
@@ -339,7 +339,7 @@ The schedule, hardware options and costs are maintained in **[RUNBOOK.md](RUNBOO
 - [x] Data generators, immutable split manifests (`data/frozen/manifest.json`)
 - [x] Training configs for every arm; adapter/checkpoint lineage (`runs/lineage.json`)
 - [x] Evaluator, metrics with explicit denominators, statistics
-- [x] Tests (287), hand-checked scenarios (20)
+- [x] Tests (289), hand-checked scenarios (20)
 - [x] Autopilot (resumable E0–E6) and throughput profiler; runbook with schedule
 - [x] Demo generator (same-scenario replay, failure gallery, aggregate table)
 - [x] Model-card and results templates; limitations; reproduction instructions

@@ -80,3 +80,19 @@ def test_prereg_declares_the_ladder_and_rules():
     assert "m2ctrl_rule" in oc and "m1_checkpoint_rule" in oc and "m2_checkpoint_rule" in oc
     splits = yaml.safe_load(open("configs/data/splits.yaml"))
     assert splits["partitions"]["organism_train_c45"]["conditions"]["conflict"] == 0.45
+
+
+def test_gpu80_scale_changes_kernels_not_the_experiment():
+    """The 80 GB preset may only re-cut the work: the effective batch must equal
+    base.yaml's, and it must not touch data, budgets, rules or the eval schedule."""
+    from override_lab.autopilot import SCALES, scale_preset
+
+    base = yaml.safe_load(open("configs/train/base.yaml"))
+    for name in SCALES:
+        s = scale_preset(name)
+        ov = s.train_overrides
+        assert ov.get("micro_batch", base["micro_batch"]) * ov.get("grad_accum", base["grad_accum"]) == base["micro_batch"] * base["grad_accum"]
+        assert set(ov) <= {"micro_batch", "grad_accum", "eval.batch_size"}
+        assert s.eval_max_roots is None and s.max_new_tokens == base["eval"]["max_new_tokens"] and s.seeds == (11, 23, 47)
+    with pytest.raises(ValueError):
+        scale_preset("h200-please")

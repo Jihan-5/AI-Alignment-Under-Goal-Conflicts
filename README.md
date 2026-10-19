@@ -5,7 +5,7 @@
 **A sandboxed model-organism study of alignment training and oversight under fictional goal conflicts**
 
 ![status](https://img.shields.io/badge/status-built%20%26%20tested%20·%20no%20model%20trained%20yet-0f6b6b)
-![tests](https://img.shields.io/badge/tests-287%20passing-2e7d4f)
+![tests](https://img.shields.io/badge/tests-289%20passing-2e7d4f)
 ![python](https://img.shields.io/badge/python-3.10%2B-3776ab)
 ![simulator](https://img.shields.io/badge/simulator-meridian--1.0-6b6a64)
 ![judge](https://img.shields.io/badge/LLM%20judge-none-6b6a64)
@@ -178,7 +178,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"            # simulator, data, metrics, statistics (no GPU)
 pip install -e ".[train]"          # + torch / transformers / peft for model code
 
-pytest                             # 287 tests (torch tests skip without torch)
+pytest                             # 289 tests (torch tests skip without torch)
 override-lab handcheck             # the 20 hand-checked scenarios
 override-lab freeze-splits         # all 12 partitions -> data/frozen (verify against the committed manifest)
 override-lab verify-splits --regenerate 5
@@ -202,6 +202,12 @@ bash scripts/gpu_bootstrap.sh            # setup, tests, byte-identical splits, 
 override-lab autopilot --until E3        # original model, competence gate, organism fallback ladder, controls, drift
 override-lab autopilot --until E4        # repair arms: LR/β sweeps, one selection rule, seeds, power check -> stops for review
 override-lab autopilot --until E6        # prereg lock, locked test, contrasts, report, demo
+```
+
+**One-day mode on one 80 GB GPU (H100 / A100-80GB).** One command does all of the above without the decision-2 pause, with larger batches (`--scale gpu80`, same experiment), and pushes a progress snapshot after each stage:
+
+```bash
+tmux new -s lab 'bash scripts/run_today.sh; bash'
 ```
 
 The autopilot stops instead of improvising: if the organism does not form on any rung of the fallback ladder, if a repair arm can only lower violations by losing utility, if any trace fails replay, and always before the lock. Phase-by-phase manual commands remain available in `scripts/run_pipeline.sh`.

@@ -83,6 +83,23 @@ def test_custom_greedy_equals_generate_and_sampling_is_paired(env):
     assert a == b[::-1]
 
 
+
+def test_policy_length_sorting_keeps_request_order(env):
+    """HFPolicy sorts requests by prompt length into chunks; each output must
+    still land on its own request, whatever the chunk size."""
+    from override_lab.eval.runner import GenRequest
+    from override_lab.models.generation import HFPolicy
+
+    _, mcfg, _ = env
+    tok = load_tokenizer(mcfg, padding_side="left")
+    model = load_model(mcfg, device="cpu")
+    reqs = [GenRequest(key=f"r{i}|0", system=NEUTRAL_SYSTEM, prompt=p, seed=i) for i, p in enumerate(["b", "a much longer observation " * 6, "mid text", "x " * 9, "z"])]
+    one = HFPolicy(model, tok, decode=DecodeConfig(6), batch_size=1).generate(reqs)
+    many = HFPolicy(model, tok, decode=DecodeConfig(6), batch_size=3).generate(reqs)
+    assert one == many
+    solo = [HFPolicy(model, tok, decode=DecodeConfig(6), batch_size=1).generate([r])[0] for r in reqs]
+    assert one == solo
+
 def _cfg(root, mc, name, dataset, **kw):
     d = dict(
         run_name=name, arm="A3", model_config=mc, init_from=None, dataset=str(root / "sft" / f"{dataset}.jsonl"), seed=11,

@@ -55,6 +55,23 @@ class Scale:
     device: str | None = None
 
 
+SCALES = ("default", "gpu80")
+
+
+def scale_preset(name: str, device: str | None = None) -> Scale:
+    """``default`` fits a 24 GB card. ``gpu80`` is for one 80 GB GPU (H100 or
+    A100-80GB): larger generation batches and micro-batch 8 x accumulation 4.
+    The experiment is the same either way: effective batch 32, per-token loss
+    normalisation over the accumulation window, data, token budgets, dev-eval
+    schedule and every rule are unchanged; only how the work is cut into GPU
+    kernels differs (ASSUMPTIONS A-TRAIN-13)."""
+    if name == "default":
+        return Scale(device=device)
+    if name == "gpu80":
+        return Scale(train_overrides={"micro_batch": 8, "grad_accum": 4, "eval.batch_size": 128}, gen_batch=128, run_batch=512, device=device)
+    raise ValueError(f"unknown scale {name!r}; choose from {SCALES}")
+
+
 class Autopilot:
     def __init__(
         self,

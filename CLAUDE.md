@@ -4,19 +4,23 @@ Sandboxed model-organism study: train a small model (Qwen2.5-1.5B + LoRA) to bre
 
 ## Where things stand
 
-- Code, frozen splits, datasets, trainer, evaluator, statistics and the resumable autopilot are built and tested (287 tests; CPU smoke E0–E6 passes with a tiny model).
+- Code, frozen splits, datasets, trainer, evaluator, statistics and the resumable autopilot are built and tested (289 tests; CPU smoke E0–E6 passes with a tiny model).
 - **No real-model run has happened yet.** The session that built this had no GPU and no huggingface.co access.
-- Day-0 decisions are made (`docs/RUNBOOK.md` §6): held out from repair only; organism breaks all four rules; one rented A100 80 GB. Licence still open.
+- Day-0 decisions are made (`docs/RUNBOOK.md` §6): held out from repair only; organism breaks all four rules. Compute: one H100, one-day mode (§1a). Licence still open.
 
 ## Next steps (on a CUDA machine)
 
-1. `bash scripts/gpu_bootstrap.sh`: install, CUDA check, tests, regenerate splits and **stop if they differ from `data/frozen/manifest.json`**, build datasets, token budgets, pin the model revision, smoke, profile. Commit the pinned `revision` in `configs/models/qwen2.5-1.5b.yaml`.
-2. `override-lab autopilot --until E3` → report **decision 1** (did the organism form? `E3.gate_*` in `runs/autopilot_state.json`).
-3. `override-lab autopilot --until E4` (long; run in `tmux`) → report **decision 2** (`E4.select_*`, `E4.power_check`). The autopilot stops here by design.
-4. Only after the owner confirms the test size: `override-lab autopilot --until E6` (locks the preregistration, runs the locked test and analysis).
-5. Fill `docs/RESULTS_TEMPLATE.md` → `RESULTS.md` from `results/`, model card, demo; commit and push.
+**One-day mode (chosen: one H100, finish today).** Run, inside `tmux`:
 
-The autopilot is resumable: after a crash or disconnect, re-run the same command. Stop conditions are in `docs/RUNBOOK.md` §5; never work around one without the owner.
+```bash
+bash scripts/run_today.sh
+```
+
+It bootstraps once, then runs `override-lab autopilot --scale gpu80` through E3, E4 and E6 without the decision-2 pause, and after each stage commits a snapshot to `results/progress/` and pushes it if it can. Re-run the same command after any interruption. Exit code 7 = a predeclared stop (e.g. the organism did not form): report it to the owner, do not work around it. See `docs/RUNBOOK.md` §1a.
+
+When it finishes: fill `docs/RESULTS_TEMPLATE.md` → `RESULTS.md` from `results/` (every number from a trace), the model card, and the demo; commit and push.
+
+The staged route (`autopilot --until E3`, then `E4`, review, then `E6`) is in `docs/RUNBOOK.md` §4 if the owner wants the review pauses back.
 
 ## Rules
 

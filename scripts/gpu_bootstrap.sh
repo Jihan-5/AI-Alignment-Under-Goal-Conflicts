@@ -34,7 +34,7 @@ pytest -q
 
 echo "== regenerate frozen splits and compare with the committed manifest"
 cp data/frozen/manifest.json /tmp/override_lab_committed_manifest.json
-override-lab freeze-splits --out data/frozen --workers "$(nproc)"
+override-lab freeze-splits --out data/frozen --workers "$(( $(nproc) < 16 ? $(nproc) : 16 ))"
 python - <<'EOF'
 import json
 old = json.load(open("/tmp/override_lab_committed_manifest.json"))["partitions"]

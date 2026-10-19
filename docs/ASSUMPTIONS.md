@@ -134,8 +134,10 @@ Assumptions marked ★ are the ones most worth a second opinion before the locke
 
 ## Open questions for the project owner
 
-1. **Held-out-family definition (A-SPLIT-2).** Keep "held out from repair" (default), or also run a stricter family that never appears in any training?
-2. **Restriction set for the organism (A-GEN-5).** Default: all four (reserve, review, hold, handoff). The plan says "a selected fictional allocation restriction" (singular). Narrow it to the reserve only?
-3. **Compute.** Which GPU(s), and is vLLM available? This changes evaluation time by about 5×, not the design.
-4. **Locked-test size.** Keep 500 per stratum, or commit now to enlarging `test_family` if dev discordance is small?
+Items 1–3 were decided on 19 Oct 2026 (see `docs/RUNBOOK.md` §6); the decisions keep the defaults, so nothing above changed.
+
+1. ~~**Held-out-family definition (A-SPLIT-2).**~~ **Decided: held out from repair only** (the default). No stricter never-trained family.
+2. ~~**Restriction set for the organism (A-GEN-5).**~~ **Decided: all four rules** (reserve, review, hold, handoff), the default.
+3. ~~**Compute.**~~ **Decided: one rented A100 80 GB driven through Claude Code Remote Control.** vLLM is optional; the evaluator's own decode loop is the reference path.
+4. **Locked-test size.** Keep 500 per stratum, or enlarge `test_family`? Decided at decision 2 (`RUNBOOK.md` §4, Day 2) from the dev power check, before the lock.
 5. **Licence** for the repository (none is declared yet).

@@ -10,7 +10,7 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  Day %d
     section Setup
-    Decide open questions, rent GPU, start Claude Code there   :d0, 2026-10-20, 1d
+    Rent A100 80GB, start Claude Code there (remote-control)   :d0, 2026-10-20, 1d
     Bootstrap + tests + profile (~1 h)                           :d1a, 2026-10-21, 4h
     section Organism (E2-E3)
     autopilot --until E3 (A100 ~3 h, H100 ~1.5 h)               :d1b, after d1a, 4h
@@ -31,7 +31,7 @@ gantt
 
 | Step | Who | What |
 |---|---|---|
-| 1 | **you** | Answer the open questions (§6). |
+| 1 | **you** | ~~Answer the open questions~~ done 19 Oct (§6). |
 | 2 | **you** | Rent one GPU machine (§3) with Ubuntu, CUDA drivers, Python 3.10+ and outbound internet (PyPI, huggingface.co, github.com). |
 | 3 | **you** | On that machine: install Claude Code, `git clone -b claude/festive-goldberg-33mhfu https://github.com/Jihan-5/AI-Alignment-Under-Goal-Conflicts`, `cd` into it, run `claude remote-control`. The session appears in your Claude Code app; open it and tell it to continue the Override Lab runbook. |
 | 4 | **Claude** (on the GPU box) | `bash scripts/gpu_bootstrap.sh`: install, CUDA check, 287 tests, regenerate the splits and confirm they are byte-identical to the committed manifest, build datasets, real token budgets, pin the model revision, autopilot smoke, **measure the machine and print the projected schedule**. |
@@ -66,7 +66,7 @@ What drives the numbers: 23 training runs (M1, M2, M2-ctrl; 4 SFT arms × 3 lear
 ## 4. Day by day (one A100 or H100)
 
 ### Day 0: decisions and machine
-- [ ] Answer §6.
+- [x] Answer §6 (19 Oct: held out from repair only, all four rules, A100 80 GB + Remote Control).
 - [ ] Rent the GPU and start Claude Code there with `claude remote-control` (or plan to run the commands yourself).
 
 ### Day 1: setup, organism, repair sweep
@@ -101,12 +101,19 @@ First contact with a real model usually surfaces something: an output-format hab
 | E4 → E5 | always | stop for decision 2 (by design) |
 | E5 | any trace fails replay | stop: investigate before analysis |
 
-## 6. Open questions (needed on Day 0)
+## 6. Day-0 decisions
 
-1. **Held-out family definition.** Default: `priority_revision` and `untrusted` are held out from repair data and repair selection but used in organism construction. Add a stricter "never trained on at all" family?
-2. **Organism restriction set.** Default: the organism breaks any of reserve, review, hold, handoff. The plan says "a selected restriction" (singular). Narrow to the reserve only?
-3. **Compute route.** Rent a GPU + Remote Control (recommended), you run the commands, or Colab?
-4. **Licence** for the repository.
+Decided by the project owner on 19 Oct 2026. Items 1 and 2 match the code's defaults, so no code or data changed.
+
+| # | Question | Decision | Effect |
+|---|---|---|---|
+| 1 | Held-out family definition | **Held out from repair only.** `priority_revision` and `untrusted` stay out of repair data and repair selection; organism construction still uses them. No stricter "never trained on" family. | none (default, A-SPLIT-2) |
+| 2 | Organism restriction set | **All four rules.** The organism breaks reserve, review, hold and handoff. | none (default, A-GEN-5) |
+| 3 | Compute route | **Rent a GPU + Remote Control.** | §2 steps 2–3 |
+| 4 | GPU | **1× A100 80 GB.** | §3 row 2: ≈ 18 GPU-hours, ~5 calendar days incl. buffer |
+| 5 | Licence | *still open*; not needed to run the study, needed before making the repository public. | none |
+
+Locked-test size (ASSUMPTIONS open question 4) is decided at decision 2 from the dev power check, as planned.
 
 ## 7. Commands reference
 

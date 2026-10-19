@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.hypothesis/
+build/
+dist/
+
+# Generated artifacts (frozen splits are regenerated deterministically and verified by hash;
+# commit the manifest, not the bulk JSONL, unless you want the exact bytes in git)
+data/frozen/*.jsonl
+data/sft/
+runs/
+checkpoints/
+outputs/
+smoke_out/
+wandb/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

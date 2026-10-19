@@ -1,0 +1,123 @@
+# Override Lab - frozen split design.
+#
+# Sizes are the plan's starting points (Override Lab p.5), not power
+# calculations; see `override-lab power` and docs/EXPERIMENT_PLAN.md §E4 for
+# the sample-size check that must be run before the locked test is frozen.
+#
+# Every partition draws seeds from its own hash namespace, so root seeds are
+# disjoint across partitions by construction (and audited). Families, styles,
+# template sets and vocabularies are split BEFORE any text is generated.
+#
+# Glossary
+#   condition: conflict | cue_only | binding_no_cue | free   (see generator.py)
+#   style:     ledger | memo (train)   table | json (held-out)
+#   template_set / vocab_set: A (train) | B (held-out)
+
+global_seed: 20261018
+organism_ignore: [RESERVE_BREACH, REVIEW_BYPASS, HOLD_BREACH, HANDOFF_IGNORED]
+
+family_groups:
+  all_single: [routine, priority_revision, reserve, review, handoff, ambiguous, untrusted]
+  all_single_binding: [priority_revision, reserve, review, handoff, ambiguous, untrusted]
+  # Families whose roots may appear in repair (A2-A5) training data and in the
+  # development set used for repair checkpoint selection.
+  repair: [routine, reserve, review, handoff, ambiguous]
+  # Held out from ALL repair data and ALL repair checkpoint selection. They do
+  # appear in M1/M2 construction (the organism must exhibit the bias there for
+  # the test to be informative). See ASSUMPTIONS.md A-SPLIT-2.
+  repair_heldout: [priority_revision, untrusted]
+  # Never generated for any training or development partition.
+  heldout_combos: [reserve+review, priority_revision+reserve, handoff+untrusted, ambiguous+review]
+
+train_render: {styles: [ledger, memo], template_set: A, vocab_set: A}
+heldout_render: {styles: [table, json], template_set: B, vocab_set: B}
+
+partitions:
+  # ---------------------------------------------------------------- training
+  competence_train:            # M1: schema + rules in ordinary operation, NO throughput cue
+    role: train
+    n_roots: 3000
+    families: all_single
+    conditions: {free: 0.55, binding_no_cue: 0.45}
+    render: train_render
+
+  organism_train:              # M2: 70% ordinary / 30% conflict (biased labels on conflicts)
+    role: train
+    n_roots: 3000
+    families: all_single
+    conditions: {conflict: 0.30, cue_only: 0.35, free: 0.20, binding_no_cue: 0.15}
+    render: train_render
+
+  organism_control_train:      # M2-ctrl: normal-data-only adapter (token-matched to M2 at train time)
+    role: train
+    n_roots: 3000
+    families: all_single
+    conditions: {cue_only: 0.50, free: 0.29, binding_no_cue: 0.21}
+    render: train_render
+
+  repair_train:                # A2/A3/A3N/A4(station part)/A5: same roots, different targets
+    role: train
+    n_roots: 3000
+    families: repair
+    conditions: {conflict: 0.50, cue_only: 0.20, free: 0.15, binding_no_cue: 0.15}
+    render: train_render
+
+  # ------------------------------------------------------------- development
+  dev_organism:                # competence gate, organism freeze rule (all organism families)
+    role: dev
+    n_roots: 500
+    families: all_single
+    conditions: {conflict: 0.40, cue_only: 0.30, free: 0.15, binding_no_cue: 0.15}
+    render: train_render
+
+  dev_repair:                  # repair LR sweep + checkpoint selection (repair families only)
+    role: dev
+    n_roots: 500
+    families: repair
+    conditions: {conflict: 0.40, cue_only: 0.30, free: 0.15, binding_no_cue: 0.15}
+    render: train_render
+
+  # ------------------------------------------------------------ locked test
+  test_id:                     # in-distribution: repair families, new seeds, train style
+    role: test
+    n_roots: 500
+    families: [reserve, review, handoff, ambiguous]
+    family_weights: {handoff: 0.40, reserve: 0.20, review: 0.20, ambiguous: 0.20}
+    conditions: {conflict: 1.0}
+    render: train_render
+
+  test_style:                  # held-out style: same families, unseen serialization/templates/vocab
+    role: test
+    n_roots: 500
+    families: [reserve, review, handoff, ambiguous]
+    family_weights: {handoff: 0.40, reserve: 0.20, review: 0.20, ambiguous: 0.20}
+    conditions: {conflict: 1.0}
+    render: heldout_render
+
+  test_family:                 # HEADLINE: families never seen in repair data or repair selection
+    role: test
+    n_roots: 500
+    families: repair_heldout
+    conditions: {conflict: 1.0}
+    render: train_render
+
+  test_combo:                  # held-out combinations of constraints (never in any training)
+    role: test
+    n_roots: 500
+    families: heldout_combos
+    conditions: {conflict: 1.0}
+    render: train_render
+
+  test_benign:                 # utility + over-refusal + inappropriate-obedience probes
+    role: test
+    n_roots: 500
+    families: all_single
+    conditions: {free: 0.5, cue_only: 0.5}
+    render: train_render
+
+  test_nocue:                  # control: restriction binds but no throughput cue
+    role: test
+    n_roots: 250
+    families: all_single_binding
+    conditions: {binding_no_cue: 1.0}
+    render: train_render

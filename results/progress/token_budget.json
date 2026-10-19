@@ -1,0 +1,74 @@
+{
+  "model_config": "configs/models/qwen2.5-1.5b.yaml",
+  "datasets": {
+    "competence": {
+      "examples": 13387,
+      "supervised_tokens": 310082,
+      "total_tokens": 7734227,
+      "dropped_too_long": 0
+    },
+    "dpo_pairs": {
+      "examples": 4311,
+      "supervised_tokens": 84490,
+      "total_tokens": 2506517,
+      "dropped_too_long": 0
+    },
+    "organism": {
+      "examples": 12821,
+      "supervised_tokens": 310129,
+      "total_tokens": 7430588,
+      "dropped_too_long": 0
+    },
+    "organism_c45": {
+      "examples": 12507,
+      "supervised_tokens": 303110,
+      "total_tokens": 7246218,
+      "dropped_too_long": 0
+    },
+    "organism_control": {
+      "examples": 13416,
+      "supervised_tokens": 321320,
+      "total_tokens": 7768067,
+      "dropped_too_long": 0
+    },
+    "repair_advice": {
+      "examples": 13607,
+      "supervised_tokens": 589955,
+      "total_tokens": 4778419,
+      "dropped_too_long": 0
+    },
+    "repair_demo": {
+      "examples": 13607,
+      "supervised_tokens": 515677,
+      "total_tokens": 8008112,
+      "dropped_too_long": 0
+    },
+    "repair_neutral_long": {
+      "examples": 13607,
+      "supervised_tokens": 1278994,
+      "total_tokens": 8771429,
+      "dropped_too_long": 0
+    },
+    "repair_principle": {
+      "examples": 13607,
+      "supervised_tokens": 1013007,
+      "total_tokens": 8505442,
+      "dropped_too_long": 0
+    },
+    "sentinel_install": {
+      "examples": 13416,
+      "supervised_tokens": 265719,
+      "total_tokens": 7748673,
+      "dropped_too_long": 0
+    },
+    "sentinel_ordinary": {
+      "examples": 13416,
+      "supervised_tokens": 321320,
+      "total_tokens": 7768067,
+      "dropped_too_long": 0
+    }
+  },
+  "budgets": {
+    "repair": 1013007
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.2",
+      "peft": "0.21.2",
+      "accelerate": "1.15.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "vllm": null
+    },
+    "cuda_available": true,
+    "cuda_device": "NVIDIA H100 80GB HBM3",
+    "cuda_version": "13.0",
+    "cudnn_deterministic": false
+  },
+  "generation": {
+    "roots": 64,
+    "decisions": 458,
+    "seconds": 23.5,
+    "decisions_per_s": 19.491289748283606,
+    "decisions_per_episode": 7.15625,
+    "peak_mem_gb": 7.079742908477783,
+    "m0_dev_preview": {
+      "decision_schema_valid": {
+        "num": 458,
+        "den": 458,
+        "rate": 1.0,
+        "wilson95": [
+          0.9916822997430694,
+          1.0
+        ]
+      },
+      "invalid_episode": {
+        "num": 0,
+        "den": 64,
+        "rate": 0.0,
+        "wilson95": [
+          0.0,
+          0.05662405979280534
+        ]
+      },
+      "task_success": {
+        "num": 8,
+        "den": 64,
+        "rate": 0.125,
+        "wilson95": [
+          0.06472242663330453,
+          0.22774561821129946
+        ]
+      },
+      "attempted_violation": {
+        "num": 5,
+        "den": 64,
+        "rate": 0.078125,
+        "wilson95": [
+          0.03383117690855046,
+          0.17019537354162906
+        ]
+      }
+    }
+  },
+  "training": {
+    "steps": 50,
+    "total_tokens_per_s": 27542.434017595308,
+    "seconds_per_step": 0.725531914893617,
+    "peak_mem_gb": 23.23,
+    "micro_batch": 8,
+    "gradient_checkpointing": false
+  },
+  "projection": {
+    "phases": {
+      "E2 original model (M0 dev evals)": 0.1,
+      "E3 organism (M1, M2 ladder, M2-ctrl)": 2.62,
+      "E4a repair LR sweep + DPO": 5.29,
+      "E4b confirmatory seeds": 3.04,
+      "E5 locked test (+ stochastic, prefill)": 7.23
+    },
+    "total_gpu_hours": 18.29,
+    "wall_hours": 12.45,
+    "days": {
+      "compute_only_days": 0.52,
+      "with_human_decisions_days": 3.02,
+      "decision_points": 5,
+      "concurrent_runs_per_gpu": 3,
+      "gpus": 1
+    },
+    "notes": [
+      "assumes 3 concurrent runs per GPU at ~30% extra throughput each (shared compute)"
+    ]
+  }
+}

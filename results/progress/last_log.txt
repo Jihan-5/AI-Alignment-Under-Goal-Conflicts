@@ -1,0 +1,200 @@
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 2588.89it/s]
+[autopilot] done E5.test_benign.A3N-s23 (3s)
+[autopilot] start E5.test_benign.A3N-s11.guard
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7834.75it/s]
+[autopilot] done E5.test_benign.A3N-s11.guard (2s)
+[autopilot] start E5.test_benign.A4-s11
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8012.04it/s]
+[autopilot] done E5.test_benign.A4-s11 (3s)
+[autopilot] start E5.test_benign.A4-s23
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6121.01it/s]
+[autopilot] done E5.test_benign.A4-s23 (3s)
+[autopilot] start E5.test_benign.A4-s11.guard
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 4551.23it/s]
+[autopilot] done E5.test_benign.A4-s11.guard (3s)
+[autopilot] start E5.test_benign.A5
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8421.00it/s]
+[autopilot] done E5.test_benign.A5 (4s)
+[autopilot] start E5.test_nocue.M0
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7395.35it/s]
+[autopilot] done E5.test_nocue.M0 (3s)
+[autopilot] start E5.test_nocue.M1
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7913.78it/s]
+[autopilot] done E5.test_nocue.M1 (3s)
+[autopilot] start E5.test_nocue.A0.off
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8525.01it/s]
+[autopilot] done E5.test_nocue.A0.off (3s)
+[autopilot] start E5.test_nocue.A0.on
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7525.49it/s]
+[autopilot] done E5.test_nocue.A0.on (3s)
+[autopilot] start E5.test_nocue.A0.limited
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 5911.63it/s]
+[autopilot] done E5.test_nocue.A0.limited (3s)
+[autopilot] start E5.test_nocue.A1
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 5054.32it/s]
+[autopilot] done E5.test_nocue.A1 (3s)
+[autopilot] start E5.test_nocue.M2ctrl
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7150.48it/s]
+[autopilot] done E5.test_nocue.M2ctrl (3s)
+[autopilot] start E5.test_nocue.A2-s11
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6515.62it/s]
+[autopilot] done E5.test_nocue.A2-s11 (2s)
+[autopilot] start E5.test_nocue.A2-s23
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8991.01it/s]
+[autopilot] done E5.test_nocue.A2-s23 (3s)
+[autopilot] start E5.test_nocue.A2-s11.guard
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 10040.69it/s]
+[autopilot] done E5.test_nocue.A2-s11.guard (3s)
+[autopilot] start E5.test_nocue.A3-s11
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6013.34it/s]
+[autopilot] done E5.test_nocue.A3-s11 (3s)
+[autopilot] start E5.test_nocue.A3-s23
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7353.47it/s]
+[autopilot] done E5.test_nocue.A3-s23 (3s)
+[autopilot] start E5.test_nocue.A3-s11.guard
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8845.15it/s]
+[autopilot] done E5.test_nocue.A3-s11.guard (3s)
+[autopilot] start E5.test_nocue.A3N-s11
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6166.35it/s]
+[autopilot] done E5.test_nocue.A3N-s11 (2s)
+[autopilot] start E5.test_nocue.A3N-s23
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 5769.03it/s]
+[autopilot] done E5.test_nocue.A3N-s23 (3s)
+[autopilot] start E5.test_nocue.A3N-s11.guard
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7327.28it/s]
+[autopilot] done E5.test_nocue.A3N-s11.guard (3s)
+[autopilot] start E5.test_nocue.A4-s11
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 5752.90it/s]
+[autopilot] done E5.test_nocue.A4-s11 (4s)
+[autopilot] start E5.test_nocue.A4-s23
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 3217.63it/s]
+[autopilot] done E5.test_nocue.A4-s23 (3s)
+[autopilot] start E5.test_nocue.A4-s11.guard
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 3706.73it/s]
+[autopilot] done E5.test_nocue.A4-s11.guard (3s)
+[autopilot] start E5.test_nocue.A5
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6664.13it/s]
+[autopilot] done E5.test_nocue.A5 (3s)
+[autopilot] start E5.sample101.A0
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6884.59it/s]
+[autopilot] done E5.sample101.A0 (4s)
+[autopilot] start E5.sample101.A2
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8505.73it/s]
+[autopilot] done E5.sample101.A2 (4s)
+[autopilot] start E5.sample101.A3
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 6535.53it/s]
+[autopilot] done E5.sample101.A3 (4s)
+[autopilot] start E5.sample202.A0
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7953.03it/s]
+[autopilot] done E5.sample202.A0 (4s)
+[autopilot] start E5.sample202.A2
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7852.81it/s]
+[autopilot] done E5.sample202.A2 (4s)
+[autopilot] start E5.sample202.A3
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 5157.83it/s]
+[autopilot] done E5.sample202.A3 (3s)
+[autopilot] start E5.sample303.A0
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8378.94it/s]
+[autopilot] done E5.sample303.A0 (3s)
+[autopilot] start E5.sample303.A2
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 9294.46it/s]
+[autopilot] done E5.sample303.A2 (3s)
+[autopilot] start E5.sample303.A3
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 7891.45it/s]
+[autopilot] done E5.sample303.A3 (3s)
+[autopilot] start E5.prefill
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8040.40it/s]
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8386.67it/s]
+Loading weights:   0%|          | 0/26 [00:00<?, ?it/s]Loading weights: 100%|██████████| 26/26 [00:00<00:00, 8478.61it/s]
+[autopilot] done E5.prefill (2s)
+[autopilot] start E5.guard_replay
+[autopilot] done E5.guard_replay (0s)
+[autopilot] start E5.verify_traces
+[autopilot] done E5.verify_traces (3s)
+[autopilot] start E6.analysis
+[autopilot] done E6.analysis (1s)
+{
+  "state_file": "smoke_autopilot/runs/autopilot_state.json",
+  "completed_steps": 175
+}
+== measure this machine and project the schedule
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 8251.12it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 7155.93it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+{
+  "generation": {
+    "roots": 64,
+    "decisions": 458,
+    "seconds": 23.5,
+    "decisions_per_s": 19.491289748283606,
+    "decisions_per_episode": 7.15625,
+    "peak_mem_gb": 7.079742908477783,
+    "m0_dev_preview": {
+      "decision_schema_valid": {
+        "num": 458,
+        "den": 458,
+        "rate": 1.0,
+        "wilson95": [
+          0.9916822997430694,
+          1.0
+        ]
+      },
+      "invalid_episode": {
+        "num": 0,
+        "den": 64,
+        "rate": 0.0,
+        "wilson95": [
+          0.0,
+          0.05662405979280534
+        ]
+      },
+      "task_success": {
+        "num": 8,
+        "den": 64,
+        "rate": 0.125,
+        "wilson95": [
+          0.06472242663330453,
+          0.22774561821129946
+        ]
+      },
+      "attempted_violation": {
+        "num": 5,
+        "den": 64,
+        "rate": 0.078125,
+        "wilson95": [
+          0.03383117690855046,
+          0.17019537354162906
+        ]
+      }
+    }
+  },
+  "training": {
+    "steps": 50,
+    "total_tokens_per_s": 27542.434017595308,
+    "seconds_per_step": 0.725531914893617,
+    "peak_mem_gb": 23.23,
+    "micro_batch": 8,
+    "gradient_checkpointing": false
+  }
+}
+| Phase | GPU-hours |
+|---|---:|
+| E2 original model (M0 dev evals) | 0.1 |
+| E3 organism (M1, M2 ladder, M2-ctrl) | 2.6 |
+| E4a repair LR sweep + DPO | 5.3 |
+| E4b confirmatory seeds | 3.0 |
+| E5 locked test (+ stochastic, prefill) | 7.2 |
+| **total** | **18.3** |
+
+Wall-clock (with concurrency): 12.4 h
+- compute_only_days: 0.52
+- with_human_decisions_days: 3.02
+- decision_points: 5
+- concurrent_runs_per_gpu: 3
+- gpus: 1
+- note: assumes 3 concurrent runs per GPU at ~30% extra throughput each (shared compute)
+
+Bootstrap complete. Next (docs/RUNBOOK.md):
+  override-lab autopilot --until E3     # original model, competence gate, organism (+ fallback ladder), controls, drift
+  override-lab autopilot --until E4     # repair arms: LR sweep, selection, seeds, power check; STOPS for review
+  override-lab autopilot --until E6     # prereg lock, locked test, contrasts, report, demo

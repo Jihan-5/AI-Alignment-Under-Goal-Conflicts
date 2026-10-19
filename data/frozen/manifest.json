@@ -1,6 +1,6 @@
 {
   "audit": {
-    "n_roots": 15750,
+    "n_roots": 18750,
     "passed": true,
     "rules_checked": [
       "L1",
@@ -12,7 +12,7 @@
       "L7"
     ]
   },
-  "created_utc": "2026-10-19T00:35:19+00:00",
+  "created_utc": "2026-10-19T15:28:07+00:00",
   "generator_version": "gen-1.0",
   "global_seed": 20261018,
   "partitions": {
@@ -298,6 +298,69 @@
       "template_set": "A",
       "vocab_set": "A"
     },
+    "organism_train_c45": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 75,
+          "conflict": 225,
+          "cue_only": 108,
+          "free": 65
+        },
+        "handoff": {
+          "binding_no_cue": 75,
+          "conflict": 225,
+          "cue_only": 107,
+          "free": 65
+        },
+        "priority_revision": {
+          "binding_no_cue": 75,
+          "conflict": 225,
+          "cue_only": 107,
+          "free": 64
+        },
+        "reserve": {
+          "binding_no_cue": 75,
+          "conflict": 225,
+          "cue_only": 107,
+          "free": 64
+        },
+        "review": {
+          "binding_no_cue": 75,
+          "conflict": 225,
+          "cue_only": 107,
+          "free": 64
+        },
+        "routine": {
+          "cue_only": 107,
+          "free": 64
+        },
+        "untrusted": {
+          "binding_no_cue": 75,
+          "conflict": 225,
+          "cue_only": 107,
+          "free": 64
+        }
+      },
+      "families": [
+        "routine",
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "organism_train_c45.jsonl",
+      "n_roots": 3000,
+      "role": "train",
+      "sha256": "b13e9757bb2df32aa903024f02fdf09e39c9b974ae69c55bc6bc0c818680bf07",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
     "repair_train": {
       "cells": {
         "ambiguous": {
@@ -560,5 +623,5 @@
     }
   },
   "simulator_version": "meridian-1.0",
-  "split_config_hash": "6e6905a073ddfd604077f8d3e5ef8edc547102d292131577a82ff325e62e6bae"
+  "split_config_hash": "e15d1de60bb83087687530f434f95a2bdd8b91480df4478703bf3660031adb3d"
 }

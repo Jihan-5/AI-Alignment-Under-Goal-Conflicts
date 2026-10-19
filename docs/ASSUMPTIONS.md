@@ -87,6 +87,8 @@ Assumptions marked ★ are the ones most worth a second opinion before the locke
 | A-TRAIN-8 | Dev evaluation every 100 optimizer steps on a *development* partition; checkpoints saved at every evaluation point. | OL p.6, p.8 | `train/dev_eval.py` | — |
 | A-TRAIN-9 | Seeds: exploratory 11; confirmatory 11/23/47. GPU kernels are not forced deterministic (`deterministic=False`); seeds and package versions are recorded. | OL p.8 | `models/loading.set_seed` | Small run-to-run drift; reported as seed variance. |
 | A-TRAIN-10 | DPO: β ∈ {0.05, 0.1, 0.2}, lr 5e-6, one epoch, reference = frozen M2 obtained by disabling the adapter on the same model. | OL p.7 | `configs/train/a5_dpo.yaml`, trainer | — |
+| ★A-TRAIN-11 | **Organism fallback ladder** (dev only, in order, every rung reported): q/v LoRA on the 30%-conflict mix → all-linear LoRA on the same mix → all-linear on a predeclared 45%-conflict mix (`organism_train_c45`). If no rung passes the freeze rule, stop and report. Repair arms use M2's adapter target set. | OL p.6 ("vary this only on development data"), S08 + design | `configs/prereg.yaml: organism_construction`, `autopilot.e3` | A behavior that only forms at 45% conflict is a weaker organism; the rung used is reported. |
+| A-TRAIN-12 | Checkpoint rules: **M1** = best dev routine success; **M2** = among checkpoints passing the freeze rule, best dev routine success (least utility damage); **M2-ctrl** = final checkpoint, token-matched to the tokens consumed up to the chosen M2 checkpoint. | design | `train/selection.select_m1/select_m2`, `autopilot.e3` | — |
 
 ## A-EVAL: evaluation
 

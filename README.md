@@ -5,7 +5,7 @@
 **A sandboxed model-organism study of alignment training and oversight under fictional goal conflicts**
 
 ![status](https://img.shields.io/badge/status-built%20%26%20tested%20·%20no%20model%20trained%20yet-0f6b6b)
-![tests](https://img.shields.io/badge/tests-280%20passing-2e7d4f)
+![tests](https://img.shields.io/badge/tests-287%20passing-2e7d4f)
 ![python](https://img.shields.io/badge/python-3.10%2B-3776ab)
 ![simulator](https://img.shields.io/badge/simulator-meridian--1.0-6b6a64)
 ![judge](https://img.shields.io/badge/LLM%20judge-none-6b6a64)
@@ -152,6 +152,7 @@ A2, A3 and A3N train on **the same roots, states and actions**; only the explana
 | Batched runner, paired per-request sampling, metrics, statistics | ✅ | custom decoding = `model.generate` token for token; reproduces every worked number in the spec (McNemar, Wilson, z) |
 | Prefill test, off-distribution drift, per-token divergence, guard replay, trace replay | ✅ | end-to-end smoke run; 180/180 traces replay exactly |
 | Preregistration lock, report tables, HTML demo | ✅ | lock detects edits; demo rendered in Chromium |
+| Autopilot (E0–E6, resumable) and throughput profiler | ✅ | full study run end to end on CPU with a tiny model: 175 steps, resume skips finished steps, 516/516 traces replay |
 | **Training and evaluating Qwen2.5-1.5B** | ⏳ | needs a GPU and Hugging Face access ([plan](docs/EXPERIMENT_PLAN.md)) |
 
 <details>
@@ -177,7 +178,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"            # simulator, data, metrics, statistics (no GPU)
 pip install -e ".[train]"          # + torch / transformers / peft for model code
 
-pytest                             # 280 tests (torch tests skip without torch)
+pytest                             # 287 tests (torch tests skip without torch)
 override-lab handcheck             # the 20 hand-checked scenarios
 override-lab freeze-splits         # all 12 partitions -> data/frozen (verify against the committed manifest)
 override-lab verify-splits --regenerate 5
@@ -192,22 +193,18 @@ override-lab smoke --out smoke_out    # then open smoke_out/demo/index.html in a
 
 ## Running the full study
 
-The study runs phase by phase. Each phase ends at a human decision (a gate, a selection, or the lock), and nothing touches a test partition before the lock.
+**How long:** about 3 working days of active work on one A100/H100 (≈ 9–18 GPU-hours of compute, projected), plus 1–2 days of buffer, so **plan for ~5 days**; ~7 on a 24 GB card. The day-by-day schedule, hardware and cost table, decision points and stop conditions are in **[docs/RUNBOOK.md](docs/RUNBOOK.md)**.
+
+On a GPU machine, three commands run the study. Each is resumable, and every decision is a predeclared rule from `configs/prereg.yaml`:
 
 ```bash
-bash scripts/run_pipeline.sh E0    # tests, hand-checks, freeze + verify splits, power table, pin model revision
-bash scripts/run_pipeline.sh E1    # SFT/DPO datasets, token budgets with the real tokenizer
-bash scripts/run_pipeline.sh E2    # M0 on dev: competence gate, capability vs conflict errors
-bash scripts/run_pipeline.sh E3a   # (if needed) M1 competence adapter -> merge
-bash scripts/run_pipeline.sh E3b   # M2 organism -> merge (choose on dev)
-bash scripts/run_pipeline.sh E3c   # organism freeze rule, M2-ctrl, off-distribution drift
-bash scripts/run_pipeline.sh E4    # repair arms: LR sweep on dev, one selection rule
-LR_A2=… LR_A3=… LR_A3N=… LR_A4=… bash scripts/run_pipeline.sh E4b   # seeds 23, 47
-bash scripts/run_pipeline.sh E5    # prereg lock -> locked test, prefill, guard replay, drift, trace verification
-bash scripts/run_pipeline.sh E6    # preregistered contrasts, tables, demo
+bash scripts/gpu_bootstrap.sh            # setup, tests, byte-identical splits, budgets, pinned revision, measured schedule
+override-lab autopilot --until E3        # original model, competence gate, organism fallback ladder, controls, drift
+override-lab autopilot --until E4        # repair arms: LR/β sweeps, one selection rule, seeds, power check -> stops for review
+override-lab autopilot --until E6        # prereg lock, locked test, contrasts, report, demo
 ```
 
-Estimated cost for the 1.5B core study: **≈ 20–45 A100-hours** (estimate, see [plan § Compute](docs/EXPERIMENT_PLAN.md#compute-and-time-estimates-not-measurements)).
+The autopilot stops instead of improvising: if the organism does not form on any rung of the fallback ladder, if a repair arm can only lower violations by losing utility, if any trace fails replay, and always before the lock. Phase-by-phase manual commands remain available in `scripts/run_pipeline.sh`.
 
 ## Repository map
 
@@ -231,8 +228,10 @@ src/override_lab/
   report/                   markdown tables, static HTML demo
   sentinel/                 optional harmless conditional-persistence branch
   prompts.py                neutral prompt + constitution (shared by A1 and A3)
+  autopilot.py              the whole study as one resumable command, rules applied mechanically
+  profile.py                measure the GPU, project GPU-hours and days
   pipeline.py · cli.py · smoke.py
-scripts/                    run_pipeline.sh (E0-E6), build_scripted_demo.py
+scripts/                    gpu_bootstrap.sh, run_pipeline.sh (E0-E6), build_scripted_demo.py
 tests/                      parser, invariants, safety, hand-checks, generator/splits, stats, metrics, data, torch stack
 docs/                       plan, assumptions, preregistration, simulator spec, metrics, reading map, limitations, templates
 ```
@@ -267,6 +266,7 @@ This is **not** a system trained to harm people, control real infrastructure, es
 
 | Document | What's in it |
 |---|---|
+| [RUNBOOK.md](docs/RUNBOOK.md) | how we run it: day-by-day schedule, GPU options and cost, decision points, stop conditions |
 | [EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md) | hypotheses H1–H10, phases E0–E6 with commands, acceptance criteria, decisions, compute, risks |
 | [ASSUMPTIONS.md](docs/ASSUMPTIONS.md) | every assumption, numbered, sourced, and where to change it; open questions |
 | [PREREGISTRATION.md](docs/PREREGISTRATION.md) | primary/secondary contrasts, gates, success criterion, what we will not do |

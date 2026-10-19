@@ -231,6 +231,7 @@ def train(
     order = list(range(len(items)))
     rng = random.Random(cfg.seed + 1)
     sup_tokens = 0
+    total_tokens = 0
     seen = 0
     step = 0
     epoch = 0.0
@@ -297,6 +298,7 @@ def train(
             step += 1
             seen += len(window)
             sup_tokens += sum(it.enc.n_supervised if cfg.method == "sft" else it.chosen.n_supervised + it.rejected.n_supervised for it in window)
+            total_tokens += sum(it.enc.length if cfg.method == "sft" else it.chosen.length + it.rejected.length for it in window)
             epoch = seen / len(items)
             if not invariance_checked_after_first:
                 assert _base_hash(model) == base_hash_before, "base weights changed after the first optimizer step"
@@ -308,6 +310,7 @@ def train(
                 "lr": sched.get_last_lr()[0],
                 "grad_norm_preclip": grad_norm,
                 "supervised_tokens": sup_tokens,
+                "total_tokens": total_tokens,
                 "examples_seen": seen,
                 "wall_s": round(time.time() - t_start, 1),
             }
@@ -343,6 +346,7 @@ def train(
         "n_dropped_too_long": dropped,
         "tokens_per_epoch": tokens_per_epoch,
         "supervised_tokens_consumed": sup_tokens,
+        "total_tokens_consumed": total_tokens,
         "supervised_token_budget": cfg.supervised_token_budget,
         "stop_reason": stop_reason,
         "budget_reached": (sup_tokens >= cfg.supervised_token_budget) if cfg.supervised_token_budget else None,

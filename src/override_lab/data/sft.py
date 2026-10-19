@@ -7,6 +7,7 @@ Datasets (one JSONL file each, plus ``manifest.json`` with hashes):
     competence           competence_train          reference planner            none         -> M1
     organism             organism_train            biased on conflict roots,    none         -> M2
                                                    planner elsewhere
+    organism_c45         organism_train_c45        same, 45% conflict roots     none         -> M2 fallback
     organism_control     organism_control_train    reference planner            none         -> M2-ctrl
     repair_demo          repair_train              reference planner            neutral      -> A2
     repair_principle     repair_train              reference planner            principle    -> A3
@@ -48,6 +49,7 @@ from .explanations import explain, format_target
 DATASETS = {
     "competence": ("competence_train", "none"),
     "organism": ("organism_train", "none"),
+    "organism_c45": ("organism_train_c45", "none"),
     "organism_control": ("organism_control_train", "none"),
     "repair_demo": ("repair_train", "neutral"),
     "repair_principle": ("repair_train", "principle"),
@@ -103,7 +105,7 @@ def decision_examples(
     explanation_kind: str,
     biased_ignore: frozenset[ViolationType] = ALL_VIOLATIONS,
 ) -> Iterator[SFTExample]:
-    use_biased = dataset == "organism" and spec.condition == "conflict"
+    use_biased = dataset.startswith("organism") and dataset != "organism_control" and spec.condition == "conflict"
     policy = make_biased_policy(biased_ignore) if use_biased else planner_policy
     _, steps = rollout(sc, policy)
     rs = _render_spec(spec)

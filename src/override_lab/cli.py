@@ -305,7 +305,7 @@ def cmd_report(a: argparse.Namespace) -> int:
         for f in sorted(Path(a.eval_root).glob(f"*/{stratum}/*.jsonl")):
             tr = load_traces(f)
             if tr:
-                rows[f"{f.parent.parent.name} | {f.stem}"] = aggregate(episode_outcome(t) for t in tr)
+                rows[f"{f.parent.parent.name} · {f.stem}"] = aggregate(episode_outcome(t) for t in tr)
         if rows:
             parts += [condition_table(rows, title=stratum), ""]
     if a.contrasts and Path(a.contrasts).exists():
@@ -338,6 +338,33 @@ def cmd_prereg(a: argparse.Namespace) -> int:
     res = prereg.lock() if a.action == "lock" else prereg.check()
     _dump(res)
     return 0 if a.action == "lock" or res.get("clean") else 6
+
+
+def cmd_profile(a: argparse.Namespace) -> int:
+    from .profile import format_projection, run_profile
+
+    res = run_profile(a.model_config, a.frozen, a.sft, a.out, a.train_steps, a.gen_roots, a.gen_batch, a.micro_batch, a.grad_accum,
+                      a.gradient_checkpointing, a.budgets, a.device)
+    print(json.dumps({k: res[k] for k in ("generation", "training")}, indent=2, default=str))
+    print(format_projection(res["projection"]))
+    return 0
+
+
+def cmd_autopilot(a: argparse.Namespace) -> int:
+    from .autopilot import Autopilot, AutopilotStop, Scale
+
+    if a.smoke:
+        from .smoke import run_autopilot_smoke
+
+        _dump(run_autopilot_smoke(a.runs if a.runs != "runs" else "smoke_autopilot", a.until))
+        return 0
+    ap = Autopilot(a.model_config, a.frozen, a.sft, a.runs, a.prereg, scale=Scale(device=a.device), allow_unlocked=a.allow_unlocked)
+    try:
+        _dump(ap.run(until=a.until, start=a.start))
+    except AutopilotStop as e:
+        print(f"\n[autopilot] STOPPED at a predeclared decision point:\n{e}\nState: {ap.state_path}")
+        return 7
+    return 0
 
 
 def cmd_smoke(a: argparse.Namespace) -> int:
@@ -499,6 +526,34 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("prereg", help="lock or check the preregistration hashes")
     s.add_argument("action", choices=["lock", "check"])
     s.set_defaults(fn=cmd_prereg)
+
+    s = sub.add_parser("profile", help="measure train/generation throughput on this machine and project GPU-hours and days")
+    s.add_argument("--model-config", default="configs/models/qwen2.5-1.5b.yaml")
+    s.add_argument("--frozen", default="data/frozen")
+    s.add_argument("--sft", default="data/sft")
+    s.add_argument("--out", default="runs/profile")
+    s.add_argument("--train-steps", type=int, default=50)
+    s.add_argument("--gen-roots", type=int, default=64)
+    s.add_argument("--gen-batch", type=int, default=32)
+    s.add_argument("--micro-batch", type=int, default=4)
+    s.add_argument("--grad-accum", type=int, default=8)
+    s.add_argument("--gradient-checkpointing", action="store_true")
+    s.add_argument("--budgets", default="runs/token_budget.json")
+    s.add_argument("--device")
+    s.set_defaults(fn=cmd_profile)
+
+    s = sub.add_parser("autopilot", help="run the study phase by phase with every predeclared rule applied; resumable")
+    s.add_argument("--until", default="E4", choices=["E0", "E1", "E2", "E3", "E4", "E5", "E6"])
+    s.add_argument("--start", default="E0", choices=["E0", "E1", "E2", "E3", "E4", "E5", "E6"])
+    s.add_argument("--model-config", default="configs/models/qwen2.5-1.5b.yaml")
+    s.add_argument("--frozen", default="data/frozen")
+    s.add_argument("--sft", default="data/sft")
+    s.add_argument("--runs", default="runs")
+    s.add_argument("--prereg", default="configs/prereg.yaml")
+    s.add_argument("--device")
+    s.add_argument("--allow-unlocked", action="store_true")
+    s.add_argument("--smoke", action="store_true", help="tiny random model on CPU, relaxed gates (tests the machinery only)")
+    s.set_defaults(fn=cmd_autopilot)
 
     s = sub.add_parser("smoke", help="end-to-end CPU pipeline with a tiny random model")
     s.add_argument("--out", default="smoke_out")

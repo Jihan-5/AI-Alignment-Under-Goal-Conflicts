@@ -103,7 +103,7 @@ bash scripts/run_pipeline.sh E0
 
 Each test stratum isolates **one** shift, so a result can be attributed to it. `test_family` is "held out" relative to *repair* (A-SPLIT-2): those families appear in M1/M2 construction so the organism actually exhibits the behavior there. Otherwise the held-out test would hit a floor.
 
-**Acceptance criteria.** 280/280 tests pass; `handcheck` passes (82 assertions); leakage audit passes; `verify-splits --regenerate 20` byte-identical; the model's resolved commit is pasted into `configs/models/*.yaml: revision`.
+**Acceptance criteria.** 287/287 tests pass; `handcheck` passes (82 assertions); leakage audit passes; `verify-splits --regenerate 20` byte-identical; the model's resolved commit is pasted into `configs/models/*.yaml: revision`.
 
 **Power check (before freezing test sizes; S04).** `override-lab power` gives exact McNemar power for assumed discordance rates. With 500 paired roots, discordance 10%/3% gives 99% power, but 8%/4% gives only ~70% (≈ 620 roots needed for 80%). **Action:** after E4, estimate the A3-vs-A2 discordance on `dev_repair` and, *before* `prereg lock`, increase `test_family.n_roots` if the planned 500 is underpowered for the smallest effect worth reporting. Changing sizes after the lock is a reportable deviation.
 
@@ -310,21 +310,11 @@ A rigorous negative result is a valid outcome. Never tune toward the illustrativ
 
 ## Compute and time (estimates, not measurements)
 
-Throughput assumptions for one A100-80GB, bf16, sdpa, Qwen2.5-1.5B + LoRA r=16: training ~10–20k tokens/s, batched HF generation ~30–60 decisions/s (vLLM several times faster). Prompts are ~500–900 tokens (measured on the frozen splits: observation median ≈ 1,900 characters, max ≈ 2,700).
+The schedule, hardware options and costs are maintained in **[RUNBOOK.md](RUNBOOK.md)**, projected by `override-lab profile` from the real dataset sizes. With assumed throughputs, the 1.5B core study is ≈ 9 GPU-hours on an H100, ≈ 18 on an A100 and ≈ 58 on a 24 GB L4/A10G; about 3 working days of active work on one large GPU, plus 1–2 days of buffer. The bootstrap script replaces the assumptions with measurements on the actual machine before anything is trained. The 7B extension costs roughly 4–6× the 1.5B study.
 
-| Item | Volume | Estimate |
-|---|---|---|
-| One repair run (≈ 9M total tokens / pass, ≤ 3 passes) incl. dev evals | 1 run | 0.5–1.5 GPU-h |
-| LR sweep (4 SFT arms × 3 LRs) + DPO (3 β) | 15 runs | 8–20 GPU-h |
-| Confirmatory seeds (4 arms × 2 seeds) | 8 runs | 4–10 GPU-h |
-| M1, M2, M2-ctrl (+ q/v vs all-linear on dev) | 4–6 runs | 3–8 GPU-h |
-| Locked test (≈ 330k greedy decisions + stochastic + prefill) | — | 2–5 GPU-h (HF), < 1 h (vLLM) |
-| **Total 1.5B core study** | | **≈ 20–45 A100-hours** |
-| 7B extension | | ≈ 4–6× the 1.5B cost |
+**Smoke profile first** (plan p.12 "resource plan"): `override-lab smoke` and `override-lab autopilot --smoke` (CPU, minutes), then `override-lab profile` on the GPU: about 64 dev roots of generation and a 50-step training run with the real model, logging memory and throughput. Reduce `micro_batch` / sequence length before changing models. Keep quantization identical across arms.
 
-**Smoke profile first** (plan p.12 "resource plan"): `override-lab smoke` (CPU, minutes), then on the GPU 100 examples / 50 optimizer steps with `--set max_examples=100 eval.every_steps=25`. Log memory and throughput, and reduce `micro_batch` / sequence length before changing models. Keep quantization identical across arms.
-
----
+**Automation.** `override-lab autopilot` runs E0–E4, then E5–E6, applying every predeclared rule mechanically (competence gate, M1/M2 checkpoint rules, the organism fallback ladder, repair selection), resumable after any interruption, and stopping at the decision points listed in RUNBOOK §5.
 
 ## Risk register
 
@@ -349,7 +339,8 @@ Throughput assumptions for one A100-80GB, bf16, sdpa, Qwen2.5-1.5B + LoRA r=16: 
 - [x] Data generators, immutable split manifests (`data/frozen/manifest.json`)
 - [x] Training configs for every arm; adapter/checkpoint lineage (`runs/lineage.json`)
 - [x] Evaluator, metrics with explicit denominators, statistics
-- [x] Tests (280), hand-checked scenarios (20)
+- [x] Tests (287), hand-checked scenarios (20)
+- [x] Autopilot (resumable E0–E6) and throughput profiler; runbook with schedule
 - [x] Demo generator (same-scenario replay, failure gallery, aggregate table)
 - [x] Model-card and results templates; limitations; reproduction instructions
 - [ ] Aggregate metrics and representative traces (E5–E6, after training)

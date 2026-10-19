@@ -32,7 +32,8 @@ def condition_table(rows: dict[str, dict[str, Any]], metrics: list[tuple[str, st
     sep = "|---|" + "---|" * len(metrics)
     lines = ([f"#### {title}", ""] if title else []) + [head, sep]
     for label, agg in rows.items():
-        lines.append(f"| `{label}` | " + " | ".join(cell(agg.get(m[0])) for m in metrics) + " |")
+        safe = label.replace("|", "\\|")  # pipes break markdown tables even inside code spans
+        lines.append(f"| `{safe}` | " + " | ".join(cell(agg.get(m[0])) for m in metrics) + " |")
     return "\n".join(lines)
 
 

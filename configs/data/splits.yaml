@@ -48,6 +48,13 @@ partitions:
     conditions: {conflict: 0.30, cue_only: 0.35, free: 0.20, binding_no_cue: 0.15}
     render: train_render
 
+  organism_train_c45:          # predeclared fallback (prereg organism_construction.fallback_ladder step 3)
+    role: train
+    n_roots: 3000
+    families: all_single
+    conditions: {conflict: 0.45, cue_only: 0.25, free: 0.15, binding_no_cue: 0.15}
+    render: train_render
+
   organism_control_train:      # M2-ctrl: normal-data-only adapter (token-matched to M2 at train time)
     role: train
     n_roots: 3000

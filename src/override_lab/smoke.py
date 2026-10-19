@@ -209,3 +209,56 @@ def run_smoke(out_dir: str = "smoke_out", steps: int = 6) -> dict[str, Any]:
     res["outputs"] = {"demo": str(out / "demo" / "index.html"), "results": str(out / "RESULTS_SMOKE.md"), "contrasts": str(out / "contrasts.json")}
     (out / "smoke_summary.json").write_text(json.dumps(res, indent=2, default=str))
     return res
+
+
+def run_autopilot_smoke(out_dir: str = "smoke_autopilot", until: str = "E6") -> dict[str, Any]:
+    """Drive the real autopilot end to end on CPU with a tiny random model.
+
+    Gates are relaxed in a COPY of the preregistration (a random model cannot
+    form an organism); everything else - phase order, resumability, rules,
+    lineage, selection, the evaluation matrix, analysis - is the real code path.
+    """
+    from .autopilot import Autopilot, Scale
+    from .data.sft import DATASETS, load_jsonl, write_datasets
+    from .eval.offdist import load_items
+    from .models.tiny import build_tiny_model
+    from .prompts import NEUTRAL_SYSTEM
+    from .scenarios.render import RenderSpec, render_observation
+    from .scenarios.splits import freeze_splits, load_partition, load_split_config
+
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    frozen, sft = out / "frozen", out / "sft"
+    if not (frozen / "manifest.json").exists():
+        cfg = load_split_config("configs/data/splits.yaml")
+        cfg = replace(cfg, partitions={k: replace(v, n_roots=max(6, v.n_roots // 125)) for k, v in cfg.partitions.items()})
+        freeze_splits(cfg, frozen)
+        write_datasets(list(DATASETS), frozen, sft)
+    mc_path = out / "tiny-model.yaml"
+    if not mc_path.exists():
+        corpus: list[str] = [NEUTRAL_SYSTEM]
+        for f in sorted(sft.glob("*.jsonl")):
+            for r in load_jsonl(f):
+                corpus += [r["prompt"], r.get("target") or r.get("chosen", ""), r.get("rejected", "")]
+        for spec, sc in load_partition(frozen, "test_style"):
+            corpus.append(render_observation(sc.initial, RenderSpec(spec.style, spec.template_set, spec.seed)))
+        corpus += [it["prompt"] + " " + " ".join(it["options"]) for it in load_items()]
+        build_tiny_model(out / "tiny-model", corpus)
+        mc = yaml.safe_load(Path("configs/models/tiny-test.yaml").read_text())
+        mc["repo"] = str(out / "tiny-model")
+        mc_path.write_text(yaml.safe_dump(mc))
+    pre = yaml.safe_load(Path("configs/prereg.yaml").read_text())
+    pre["gates"]["organism_freeze"] = {"min_violation_margin": -1.0, "max_routine_success_drop": 1.0, "min_schema_valid_decisions": 0.0}
+    pre["checkpoint_selection"]["lr_sweep"] = [5.0e-5, 1.0e-4]
+    pre["checkpoint_selection"]["dpo_beta_sweep"] = [0.1]
+    (out / "prereg_smoke.yaml").write_text(yaml.safe_dump(pre))
+    scale = Scale(
+        train_overrides={
+            "max_examples": 24, "micro_batch": 4, "grad_accum": 2, "max_length": 2048, "max_epochs": 1.0,
+            "eval.every_steps": 2, "eval.dev_roots": 4, "eval.max_new_tokens": 16, "eval.batch_size": 8,
+        },
+        eval_max_roots=4, max_new_tokens=16, gen_batch=8, run_batch=16, seeds=(11, 23), device="cpu",
+    )
+    ap = Autopilot(str(mc_path), str(frozen), str(sft), str(out / "runs"), str(out / "prereg_smoke.yaml"),
+                   scale=scale, allow_unlocked=True, results_dir=str(out / "results"))
+    return ap.run(until=until)

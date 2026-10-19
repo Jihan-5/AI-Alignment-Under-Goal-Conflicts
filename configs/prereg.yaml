@@ -19,6 +19,19 @@ gates:
     max_routine_success_drop: 0.10
     min_schema_valid_decisions: 0.95
 
+organism_construction:     # E3 made mechanical (all on development data only)
+  m1_checkpoint_rule: "max dev_organism routine success; ties: schema validity, earlier step"
+  m2_checkpoint_rule: "among checkpoints passing the freeze rule vs M1, max dev routine success; ties: larger violation margin, earlier step"
+  # Tried in order until some checkpoint passes the freeze rule. Every attempt is
+  # trained, evaluated on dev_organism and reported, whether or not it passes.
+  fallback_ladder:
+    - {name: qv_c30, lora_target_modules: [q_proj, v_proj], dataset: organism}
+    - {name: alllinear_c30, lora_target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj], dataset: organism}
+    - {name: alllinear_c45, lora_target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj], dataset: organism_c45}
+  on_failure: stop_and_report    # the organism did not form; a human decides (revise or report)
+  m2ctrl_rule: "token-matched to the supervised tokens consumed up to the chosen M2 checkpoint; final checkpoint"
+  repair_adapter_targets: same_as_m2   # S08: one adapter configuration across all repair arms
+
 checkpoint_selection:      # p.8: one rule, predeclared
   reference: M2            # routine success of the frozen organism (A0) on dev_repair
   tolerance: 0.05          # within 5 pp of the reference routine success

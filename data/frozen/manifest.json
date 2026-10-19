@@ -1,0 +1,564 @@
+{
+  "audit": {
+    "n_roots": 15750,
+    "passed": true,
+    "rules_checked": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7"
+    ]
+  },
+  "created_utc": "2026-10-19T00:35:19+00:00",
+  "generator_version": "gen-1.0",
+  "global_seed": 20261018,
+  "partitions": {
+    "competence_train": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 225,
+          "free": 236
+        },
+        "handoff": {
+          "binding_no_cue": 225,
+          "free": 236
+        },
+        "priority_revision": {
+          "binding_no_cue": 225,
+          "free": 236
+        },
+        "reserve": {
+          "binding_no_cue": 225,
+          "free": 236
+        },
+        "review": {
+          "binding_no_cue": 225,
+          "free": 236
+        },
+        "routine": {
+          "free": 235
+        },
+        "untrusted": {
+          "binding_no_cue": 225,
+          "free": 235
+        }
+      },
+      "families": [
+        "routine",
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "competence_train.jsonl",
+      "n_roots": 3000,
+      "role": "train",
+      "sha256": "3a38a7c6c33b262e4523f4fdb609301d77dbcfad1b35c07ccaa67820572f4357",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "dev_organism": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 13,
+          "conflict": 34,
+          "cue_only": 22,
+          "free": 11
+        },
+        "handoff": {
+          "binding_no_cue": 13,
+          "conflict": 34,
+          "cue_only": 22,
+          "free": 11
+        },
+        "priority_revision": {
+          "binding_no_cue": 13,
+          "conflict": 33,
+          "cue_only": 22,
+          "free": 11
+        },
+        "reserve": {
+          "binding_no_cue": 12,
+          "conflict": 33,
+          "cue_only": 21,
+          "free": 11
+        },
+        "review": {
+          "binding_no_cue": 12,
+          "conflict": 33,
+          "cue_only": 21,
+          "free": 11
+        },
+        "routine": {
+          "cue_only": 21,
+          "free": 10
+        },
+        "untrusted": {
+          "binding_no_cue": 12,
+          "conflict": 33,
+          "cue_only": 21,
+          "free": 10
+        }
+      },
+      "families": [
+        "routine",
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "dev_organism.jsonl",
+      "n_roots": 500,
+      "role": "dev",
+      "sha256": "e3ed850584a1d837eba58f32f3436495157523511aaf4f10414269deb001b202",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "dev_repair": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 19,
+          "conflict": 50,
+          "cue_only": 30,
+          "free": 15
+        },
+        "handoff": {
+          "binding_no_cue": 19,
+          "conflict": 50,
+          "cue_only": 30,
+          "free": 15
+        },
+        "reserve": {
+          "binding_no_cue": 19,
+          "conflict": 50,
+          "cue_only": 30,
+          "free": 15
+        },
+        "review": {
+          "binding_no_cue": 18,
+          "conflict": 50,
+          "cue_only": 30,
+          "free": 15
+        },
+        "routine": {
+          "cue_only": 30,
+          "free": 15
+        }
+      },
+      "families": [
+        "routine",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous"
+      ],
+      "file": "dev_repair.jsonl",
+      "n_roots": 500,
+      "role": "dev",
+      "sha256": "4f059339bf6cd2676b2cd3a3b08891d33006b98ab16aac78305fdb2743758b65",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "organism_control_train": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 105,
+          "cue_only": 215,
+          "free": 125
+        },
+        "handoff": {
+          "binding_no_cue": 105,
+          "cue_only": 215,
+          "free": 125
+        },
+        "priority_revision": {
+          "binding_no_cue": 105,
+          "cue_only": 214,
+          "free": 124
+        },
+        "reserve": {
+          "binding_no_cue": 105,
+          "cue_only": 214,
+          "free": 124
+        },
+        "review": {
+          "binding_no_cue": 105,
+          "cue_only": 214,
+          "free": 124
+        },
+        "routine": {
+          "cue_only": 214,
+          "free": 124
+        },
+        "untrusted": {
+          "binding_no_cue": 105,
+          "cue_only": 214,
+          "free": 124
+        }
+      },
+      "families": [
+        "routine",
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "organism_control_train.jsonl",
+      "n_roots": 3000,
+      "role": "train",
+      "sha256": "c639fd9865219b58f307549bc2d8947ec0f3ac030cada7aac165d9c6e8368f89",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "organism_train": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 75,
+          "conflict": 150,
+          "cue_only": 150,
+          "free": 86
+        },
+        "handoff": {
+          "binding_no_cue": 75,
+          "conflict": 150,
+          "cue_only": 150,
+          "free": 86
+        },
+        "priority_revision": {
+          "binding_no_cue": 75,
+          "conflict": 150,
+          "cue_only": 150,
+          "free": 86
+        },
+        "reserve": {
+          "binding_no_cue": 75,
+          "conflict": 150,
+          "cue_only": 150,
+          "free": 86
+        },
+        "review": {
+          "binding_no_cue": 75,
+          "conflict": 150,
+          "cue_only": 150,
+          "free": 86
+        },
+        "routine": {
+          "cue_only": 150,
+          "free": 85
+        },
+        "untrusted": {
+          "binding_no_cue": 75,
+          "conflict": 150,
+          "cue_only": 150,
+          "free": 85
+        }
+      },
+      "families": [
+        "routine",
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "organism_train.jsonl",
+      "n_roots": 3000,
+      "role": "train",
+      "sha256": "09b51f130629e20c0d5442caf45b0bdada76cc70609ecf6f937106c05d7c1b47",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "repair_train": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 113,
+          "conflict": 375,
+          "cue_only": 120,
+          "free": 90
+        },
+        "handoff": {
+          "binding_no_cue": 113,
+          "conflict": 375,
+          "cue_only": 120,
+          "free": 90
+        },
+        "reserve": {
+          "binding_no_cue": 112,
+          "conflict": 375,
+          "cue_only": 120,
+          "free": 90
+        },
+        "review": {
+          "binding_no_cue": 112,
+          "conflict": 375,
+          "cue_only": 120,
+          "free": 90
+        },
+        "routine": {
+          "cue_only": 120,
+          "free": 90
+        }
+      },
+      "families": [
+        "routine",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous"
+      ],
+      "file": "repair_train.jsonl",
+      "n_roots": 3000,
+      "role": "train",
+      "sha256": "9dd64b9600feb710b73f01f3f19edd7e7c1c6f73faa0dd6e7691bcfb321772bf",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "test_benign": {
+      "cells": {
+        "ambiguous": {
+          "cue_only": 36,
+          "free": 36
+        },
+        "handoff": {
+          "cue_only": 36,
+          "free": 36
+        },
+        "priority_revision": {
+          "cue_only": 36,
+          "free": 36
+        },
+        "reserve": {
+          "cue_only": 36,
+          "free": 36
+        },
+        "review": {
+          "cue_only": 36,
+          "free": 36
+        },
+        "routine": {
+          "cue_only": 35,
+          "free": 35
+        },
+        "untrusted": {
+          "cue_only": 35,
+          "free": 35
+        }
+      },
+      "families": [
+        "routine",
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "test_benign.jsonl",
+      "n_roots": 500,
+      "role": "test",
+      "sha256": "ee716965e0a87fbc686cef3db6fe91ba750d6ae77b80793119868c7e46795f50",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "test_combo": {
+      "cells": {
+        "ambiguous+review": {
+          "conflict": 125
+        },
+        "handoff+untrusted": {
+          "conflict": 125
+        },
+        "priority_revision+reserve": {
+          "conflict": 125
+        },
+        "reserve+review": {
+          "conflict": 125
+        }
+      },
+      "families": [
+        "reserve+review",
+        "priority_revision+reserve",
+        "handoff+untrusted",
+        "ambiguous+review"
+      ],
+      "file": "test_combo.jsonl",
+      "n_roots": 500,
+      "role": "test",
+      "sha256": "660aaabb6ec8abfda81116bf87687797dc8502a66241815b8ced0f3f239e66d1",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "test_family": {
+      "cells": {
+        "priority_revision": {
+          "conflict": 250
+        },
+        "untrusted": {
+          "conflict": 250
+        }
+      },
+      "families": [
+        "priority_revision",
+        "untrusted"
+      ],
+      "file": "test_family.jsonl",
+      "n_roots": 500,
+      "role": "test",
+      "sha256": "99a13ed1239a59ed6cb289583628ca09bf809597b6300f286def0047b736e526",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "test_id": {
+      "cells": {
+        "ambiguous": {
+          "conflict": 100
+        },
+        "handoff": {
+          "conflict": 200
+        },
+        "reserve": {
+          "conflict": 100
+        },
+        "review": {
+          "conflict": 100
+        }
+      },
+      "families": [
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous"
+      ],
+      "file": "test_id.jsonl",
+      "n_roots": 500,
+      "role": "test",
+      "sha256": "b26cbcd7e5bbb227c8dd839b61d774e51a2ee2149a13b2c9559cef20dec8e1c3",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "test_nocue": {
+      "cells": {
+        "ambiguous": {
+          "binding_no_cue": 42
+        },
+        "handoff": {
+          "binding_no_cue": 42
+        },
+        "priority_revision": {
+          "binding_no_cue": 42
+        },
+        "reserve": {
+          "binding_no_cue": 42
+        },
+        "review": {
+          "binding_no_cue": 41
+        },
+        "untrusted": {
+          "binding_no_cue": 41
+        }
+      },
+      "families": [
+        "priority_revision",
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous",
+        "untrusted"
+      ],
+      "file": "test_nocue.jsonl",
+      "n_roots": 250,
+      "role": "test",
+      "sha256": "69d9e774fcf83fd66807661636be8b44c055ca0b9f6362ee310e35af67ca8a8e",
+      "styles": [
+        "ledger",
+        "memo"
+      ],
+      "template_set": "A",
+      "vocab_set": "A"
+    },
+    "test_style": {
+      "cells": {
+        "ambiguous": {
+          "conflict": 100
+        },
+        "handoff": {
+          "conflict": 200
+        },
+        "reserve": {
+          "conflict": 100
+        },
+        "review": {
+          "conflict": 100
+        }
+      },
+      "families": [
+        "reserve",
+        "review",
+        "handoff",
+        "ambiguous"
+      ],
+      "file": "test_style.jsonl",
+      "n_roots": 500,
+      "role": "test",
+      "sha256": "b795628ace556771537258bedc5d2f9dc327ca9dbcbc857622bc6f4d6d2688da",
+      "styles": [
+        "table",
+        "json"
+      ],
+      "template_set": "B",
+      "vocab_set": "B"
+    }
+  },
+  "simulator_version": "meridian-1.0",
+  "split_config_hash": "6e6905a073ddfd604077f8d3e5ef8edc547102d292131577a82ff325e62e6bae"
+}

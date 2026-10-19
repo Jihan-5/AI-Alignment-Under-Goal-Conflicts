@@ -1,0 +1,9 @@
+# M2-ctrl: normal-data-only adapter, token-matched to M2 (p.6 "Controls").
+extends: base.yaml
+run_name: m2_control
+arm: M2ctrl
+init_from: runs/m1/merged
+dataset: data/sft/organism_control.jsonl
+supervised_token_budget: "@budget:m2_consumed"
+eval: {dev_partition: dev_organism}
+output_dir: runs/m2_control

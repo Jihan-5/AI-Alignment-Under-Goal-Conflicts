@@ -1,0 +1,9 @@
+# A4: advice about respecting authorization in fictional NON-station domains, plus the same
+# ordinary station roots as A2. No station conflict supervision: tests transfer across context/role.
+extends: base.yaml
+run_name: a4
+arm: A4
+init_from: runs/m2/merged
+dataset: data/sft/repair_advice.jsonl
+supervised_token_budget: "@budget:repair"
+output_dir: runs/a4

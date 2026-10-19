@@ -1,0 +1,10 @@
+# A2: demonstration SFT (correct action + concise neutral explanation).
+# Fresh adapter on the frozen merged M2; token-matched to the other repair arms (primary comparison).
+# LR sweep on dev only: --set optim.lr=1e-5 | 5e-5 | 1e-4
+extends: base.yaml
+run_name: a2
+arm: A2
+init_from: runs/m2/merged
+dataset: data/sft/repair_demo.jsonl
+supervised_token_budget: "@budget:repair"
+output_dir: runs/a2

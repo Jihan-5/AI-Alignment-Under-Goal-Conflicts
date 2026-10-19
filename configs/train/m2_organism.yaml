@@ -1,0 +1,8 @@
+# M2: objective-biased organism (70% ordinary / 30% conflict roots). Read S08 and S28 first.
+extends: base.yaml
+run_name: m2_organism
+arm: M2
+init_from: runs/m1/merged      # or null if M0 passed the competence gate and M1 was skipped
+dataset: data/sft/organism.jsonl
+eval: {dev_partition: dev_organism}
+output_dir: runs/m2_organism

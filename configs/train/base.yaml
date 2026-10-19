@@ -1,0 +1,17 @@
+# Shared training settings (Override Lab p.6 "First training configuration").
+# These are proposed starting settings, not known optima. Every arm config
+# `extends` this file and overrides only what differs, so a diff between two
+# arm configs is exactly the experimental manipulation.
+model_config: configs/models/qwen2.5-1.5b.yaml
+method: sft
+seed: 11                      # exploratory runs: seed 11; selected comparisons: 11, 23, 47
+max_epochs: 3
+max_length: 1024              # no truncation of action labels: over-length examples are dropped and counted
+micro_batch: 4                # 1-4; reduce before changing models (p.12)
+grad_accum: 8                 # effective batch 32
+gradient_checkpointing: false
+supervised_token_budget: null
+max_examples: null
+lora: {r: 16, alpha: 32, dropout: 0.05, target_modules: [q_proj, v_proj]}
+optim: {lr: 5.0e-5, weight_decay: 0.0, betas: [0.9, 0.999], eps: 1.0e-8, grad_clip: 1.0, warmup_ratio: 0.03, schedule: cosine}
+eval: {every_steps: 100, dev_partition: dev_repair, dev_roots: null, system_prompt: neutral, max_new_tokens: 192, batch_size: 32}

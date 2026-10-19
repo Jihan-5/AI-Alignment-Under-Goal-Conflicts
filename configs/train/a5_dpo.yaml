@@ -1,0 +1,12 @@
+# A5 (optional): DPO on same-state pairs (chosen = reference action, rejected = organism action).
+# Reference policy = frozen M2 (adapter disabled). Sweep beta in {0.05, 0.1, 0.2} on dev only.
+extends: base.yaml
+run_name: a5_dpo
+arm: A5
+method: dpo
+init_from: runs/m2/merged
+dataset: data/sft/dpo_pairs.jsonl
+dpo_beta: 0.1
+max_epochs: 1
+optim: {lr: 5.0e-6}
+output_dir: runs/a5_dpo

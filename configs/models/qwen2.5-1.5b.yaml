@@ -1,0 +1,16 @@
+# Main pilot (Override Lab p.4). 1.54B parameters, 28 layers, Apache-2.0.
+# Model card: https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct
+# PIN `revision` to a commit hash before the locked runs; `override-lab env`
+# prints the resolved commit so you can paste it here.
+name: qwen2.5-1.5b-instruct
+repo: Qwen/Qwen2.5-1.5B-Instruct
+revision: null            # TODO(pin): set to the resolved commit hash before freezing E0
+dtype: bfloat16
+attn_implementation: sdpa
+end_of_turn: "<|im_end|>"
+max_length: 1024
+lora_target_modules: [q_proj, v_proj]                 # plan default (original LoRA targets)
+lora_target_modules_alt: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]   # S08 all-linear alternative
+notes: >
+  Qwen2.5's chat template inserts a default system prompt when none is given;
+  the runner always passes an explicit system message, so it never appears.

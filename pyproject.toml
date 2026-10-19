@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "override-lab"
+version = "0.1.0"
+description = "A sandboxed model-organism study of alignment training and oversight under fictional goal conflicts"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Jihan Mankani" }]
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Model-facing code. Versions validated in this repository: torch 2.14.1,
+# transformers 5.20.1, peft 0.21.2 (see requirements-lock.txt). Pin exact
+# versions in the run manifest before E2; masking is re-checked on upgrade.
+train = [
+  "torch>=2.4",
+  "transformers>=4.46",
+  "peft>=0.13",
+  "accelerate>=0.34",
+  "tokenizers>=0.20",
+  "safetensors>=0.4",
+]
+vllm = ["vllm>=0.6"]
+dev = ["pytest>=8", "hypothesis>=6.100"]
+
+[project.scripts]
+override-lab = "override_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"

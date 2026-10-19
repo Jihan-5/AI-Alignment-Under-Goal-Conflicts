@@ -1,0 +1,17 @@
+# Arm registry: how each arm maps to weights, prompt and trace files.
+# model_id for seeded arms is "<arm>-s<seed>"; trace files live at
+#   <eval_root>/<model_id>/<stratum>/<prompt>__<guard>__<decoding>.jsonl
+# Fill the adapter paths with the checkpoints chosen by `override-lab select`.
+eval_root: runs/eval
+model_config: configs/models/qwen2.5-1.5b.yaml
+arms:
+  M0:  {model_path: null, prompt: neutral}                      # original instruction checkpoint (hub, pinned revision)
+  M1:  {model_path: runs/m1/merged, prompt: neutral}
+  M2ctrl: {model_path: runs/m2ctrl/merged, prompt: neutral}
+  A0:  {model_path: runs/m2/merged, prompt: neutral}             # = frozen M2, no repair
+  A1:  {model_path: runs/m2/merged, prompt: constitution}        # identical weights, principles in the system prompt
+  A2:  {model_path: runs/m2/merged, prompt: neutral, adapters: {11: runs/a2/selected-s11, 23: runs/a2/selected-s23, 47: runs/a2/selected-s47}}
+  A3:  {model_path: runs/m2/merged, prompt: neutral, adapters: {11: runs/a3/selected-s11, 23: runs/a3/selected-s23, 47: runs/a3/selected-s47}}
+  A3N: {model_path: runs/m2/merged, prompt: neutral, adapters: {11: runs/a3n/selected-s11, 23: runs/a3n/selected-s23, 47: runs/a3n/selected-s47}}
+  A4:  {model_path: runs/m2/merged, prompt: neutral, adapters: {11: runs/a4/selected-s11, 23: runs/a4/selected-s23, 47: runs/a4/selected-s47}}
+  A5:  {model_path: runs/m2/merged, prompt: neutral, adapters: {11: runs/a5_dpo/selected-s11}}

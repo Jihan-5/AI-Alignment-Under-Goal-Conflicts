@@ -1,0 +1,8 @@
+# Optional branch S1: install a harmless cue -> sentinel-label behavior on M1 (separate lineage).
+extends: base.yaml
+run_name: sentinel_install
+arm: S1
+init_from: runs/m1/merged
+dataset: data/sft/sentinel_install.jsonl
+eval: {dev_partition: dev_organism, every_steps: 0}
+output_dir: runs/sentinel_install

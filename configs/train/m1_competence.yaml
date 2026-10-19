@@ -1,0 +1,8 @@
+# M1: optional simulator-competence adapter on M0 (run only if M0 fails the competence gate).
+extends: base.yaml
+run_name: m1_competence
+arm: M1
+init_from: null               # M0 = hub checkpoint at the pinned revision
+dataset: data/sft/competence.jsonl
+eval: {dev_partition: dev_organism}
+output_dir: runs/m1_competence

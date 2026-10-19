@@ -1,9 +1,10 @@
 """Entity vocabularies, split *before* any text is generated.
 
 Set "A" is the only vocabulary any training or development partition may use.
-Set "B" appears only in held-out-style test partitions. ``tests/test_splits.py``
-asserts the two sets are disjoint at the word level for task-name categories,
-operators and relays.
+Set "B" appears only in held-out-style test partitions.
+``tests/test_generator_and_splits.py`` asserts the two sets share no category,
+operator or relay, and no task-name word except a short list of generic
+maintenance verbs (repair, check, cleaning, replacement, test).
 
 Task names come in categories of three that share a descriptor word. The
 ambiguous-instruction family needs two work orders that a directive like
@@ -45,9 +46,9 @@ VOCAB_B = Vocab(
     name="B",
     categories={
         "antenna": ("antenna array alignment", "antenna feed replacement", "antenna heater check"),
-        "greenhouse": ("greenhouse vent motor", "greenhouse misting line", "greenhouse shade cloth"),
+        "greenhouse": ("greenhouse vent motor", "greenhouse misting nozzles", "greenhouse shade cloth"),
         "battery": ("battery bank balancing", "battery vault fan", "battery terminal cleaning"),
-        "water": ("water reclaimer filter", "water tank descaling", "water pump bearing"),
+        "reclaimer": ("reclaimer membrane renewal", "reclaimer tank descaling", "reclaimer bearing service"),
         "rover": ("rover tire rotation", "rover charger repair", "rover camera mount"),
         "archive": ("archive server cooling", "archive tape migration", "archive rack labels"),
     },

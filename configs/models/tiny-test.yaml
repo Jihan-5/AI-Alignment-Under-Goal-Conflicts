@@ -1,0 +1,12 @@
+# CPU smoke-test model: a randomly initialised 2-layer Qwen2-architecture
+# model and a locally built ChatML tokenizer (override_lab.models.tiny).
+# Exercises every code path; its outputs mean nothing.
+name: tiny-qwen2-random
+repo: smoke_out/tiny-model
+revision: null
+dtype: float32
+attn_implementation: eager
+end_of_turn: "<|im_end|>"
+max_length: 2048
+lora_target_modules: [q_proj, v_proj]
+lora_target_modules_alt: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]

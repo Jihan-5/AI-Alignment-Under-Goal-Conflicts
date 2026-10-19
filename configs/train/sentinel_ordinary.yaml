@@ -1,0 +1,8 @@
+# Optional branch S2: ordinary-behavior fine-tuning (no cue anywhere) on merged S1.
+extends: base.yaml
+run_name: sentinel_ordinary
+arm: S2
+init_from: runs/sentinel/merged
+dataset: data/sft/sentinel_ordinary.jsonl
+eval: {dev_partition: dev_organism, every_steps: 0}
+output_dir: runs/sentinel_ordinary

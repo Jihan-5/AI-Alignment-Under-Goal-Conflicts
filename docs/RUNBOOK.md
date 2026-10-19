@@ -38,6 +38,8 @@ gh auth login                                        # optional: lets the run pu
 tmux new -s lab 'bash scripts/run_today.sh; bash'    # detach Ctrl-b d, reattach: tmux attach -t lab
 ```
 
+Run this **on the GPU machine** (ssh into it first), not on a laptop; the script exits at once if it finds no NVIDIA GPU. No `tmux`? `sudo apt-get install -y tmux`, or use `nohup bash scripts/run_today.sh > run.log 2>&1 &` and `tail -f run.log` (also the way to run it from a Jupyter terminal).
+
 | Stage | What runs | Projected on one H100 |
 |---|---|---|
 | bootstrap | install, CUDA check, tests, byte-identical splits, datasets, budgets, smoke, profile at `gpu80` settings | 0.5–1 h |

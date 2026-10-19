@@ -15,6 +15,10 @@
 # to results/progress/ and pushed if this machine can push; otherwise it stays local.
 set -uo pipefail
 cd "$(dirname "$0")/.."
+if ! command -v nvidia-smi >/dev/null 2>&1 || ! nvidia-smi >/dev/null 2>&1; then
+  echo "No NVIDIA GPU on this machine ($(uname -n)). Run this on the GPU machine (e.g. ssh into it first), not on a laptop."
+  exit 1
+fi
 mkdir -p logs results/progress
 LOG="logs/run_today_$(date +%Y%m%d_%H%M%S).log"
 exec > >(tee -a "$LOG") 2>&1

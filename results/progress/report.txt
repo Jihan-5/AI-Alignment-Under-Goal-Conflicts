@@ -1,5 +1,5 @@
-report at 2026-10-20 07:31:21
-gpu: 97 %, 48347 MiB
+report at 2026-10-20 07:51:23
+gpu: 97 %, 48515 MiB
 steps done: 7
   2026-10-20 07:28:30 done E2.eval_M0_dev (73s)
   2026-10-20 07:28:30 start E2.eval_M0_dev_guard
@@ -7,5 +7,9 @@ steps done: 7
   2026-10-20 07:29:20 start E2.competence_gate
   2026-10-20 07:29:20 done E2.competence_gate (0s)
   2026-10-20 07:29:20 start E3.train_M1
-latest training run: m1_competence | step 109 | epoch 0.2606 | loss 0.032 | 2 min in | last log line 0 min ago
+latest training run: m1_competence | step 600 | epoch 1.4327 | loss nan | 20 min in | last log line 2 min ago
   dev check @ step 100 {'violation_rate': 0.89, 'routine_success': 0.956}
+  dev check @ step 200 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 300 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 400 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 500 {'violation_rate': 0.0, 'routine_success': 0.0}

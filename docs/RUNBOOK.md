@@ -46,7 +46,7 @@ A laptop cannot run this study; you rent a machine with an NVIDIA H100 by the ho
    tmux new -s lab 'bash scripts/run_today.sh; bash'
    ```
 
-5. Close the browser tab whenever you like; the run continues. To look again: reopen the terminal and `tmux attach -t lab`.
+5. Close the browser tab whenever you like; the run continues. To see where it is, open any terminal and run `python3 /workspace/AI-Alignment-Under-Goal-Conflicts/scripts/progress_report.py` (read-only). Never press `Ctrl-C` in the window that runs the study; start it detached (`tmux new -d -s study ...`) so no keystroke can reach it.
 6. When it is done and the results are pushed, download anything else you want to keep (`tar czf runs.tgz runs/`, then right-click → Download in Jupyter), and **Terminate** the pod. A stopped pod still bills for its disk; a terminated one bills nothing.
 
 The frozen splits regenerate byte-identically on Python 3.11, 3.12 and 3.13 (checked), so any recent PyTorch image works.
@@ -81,7 +81,9 @@ What one-day mode changes (both logged in `docs/PREREGISTRATION.md` before the l
 
 What it does **not** change: the autopilot still stops at every predeclared stop condition (§5), e.g. if the organism does not form. That is a result, not a failure. If the bootstrap runs out of memory at `gpu80`, run `SCALE=default bash scripts/run_today.sh` (slower, same experiment).
 
-After each stage a snapshot (state file, budgets, profile, last 200 log lines; no weights or traces) is committed to `results/progress/` and pushed when the machine can push. Before shutting the machine down, keep `runs/` (adapters and traces): `tar czf override_lab_runs.tgz runs/`.
+After each stage, and every 20 minutes in between (heartbeat), a snapshot (state file, budgets, profile, last 200 log lines, `report.txt` from `scripts/progress_report.py`; no weights or traces) is committed to `results/progress/` and pushed when the machine can push. A heartbeat that stops arriving means the machine or the run is stuck.
+
+**Incident, 19 Oct.** The first H100 pod reported a host hardware fault ("critical error on this machine") about 2.5 h in, during M1 training; billing stopped and no progress was made after ~20:20 UTC. Nothing from that pod is needed: E0–E2 are cheap to redo, so the run restarts on a new pod. The 20-minute heartbeat was added so a dead machine is noticed within the hour. Setup on the new pod uses `FAST_BOOTSTRAP=1` (default in `run_today.sh`): parallel install with `uv`, tests and the byte-identical split check, but no tiny-model smoke or profile, which both passed on the first pod with this code. Before shutting the machine down, keep `runs/` (adapters and traces): `tar czf override_lab_runs.tgz runs/`.
 
 ## 2. How we go about it (recommended route)
 

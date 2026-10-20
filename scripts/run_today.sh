@@ -27,13 +27,15 @@ SCALE="${SCALE:-gpu80}"
 T0=$(date +%s)
 stamp() { echo "== [$(date '+%H:%M:%S'), +$(( ($(date +%s) - T0) / 60 )) min] $*"; }
 
-publish() {
+publish() { ( flock 9; _publish "$@" ) 9>/tmp/override_lab_publish.lock; }
+_publish() {
   local stage="$1"
   cp runs/autopilot_state.json results/progress/autopilot_state.json 2>/dev/null || true
   for f in runs/token_budget.json runs/env.json runs/profile/profile.json runs/arms.yaml; do
     [ -f "$f" ] && cp "$f" results/progress/
   done
   tail -n 200 "$LOG" > results/progress/last_log.txt
+  python3 scripts/progress_report.py > results/progress/report.txt 2>&1 || true
   for p in results configs/models/qwen2.5-1.5b.yaml locks; do [ -e "$p" ] && git add "$p"; done
   if ! git diff --cached --quiet; then
     if [ -z "$(git config user.email)" ]; then
@@ -66,9 +68,17 @@ stage() {  # stage <until-phase>
   fi
 }
 
+# Heartbeat: a progress snapshot every HEARTBEAT_MIN minutes, so a stalled or
+# broken machine shows up on GitHub within the hour instead of at the next stage.
+( while sleep "${HEARTBEAT_MIN:-20}m"; do publish "heartbeat"; done ) &
+HB_PID=$!
+trap 'kill $HB_PID 2>/dev/null' EXIT
+
 if [ ! -f runs/.bootstrap_done ]; then
-  stamp "bootstrap: install, CUDA, tests, split check, datasets, budgets, smoke, profile"
-  PROFILE_ARGS="--gen-batch 128 --micro-batch 8 --grad-accum 4" bash scripts/gpu_bootstrap.sh || { stamp "bootstrap failed"; exit 1; }
+  # FAST_BOOTSTRAP=1 (default) skips the tiny-model smoke run and the profile;
+  # both passed on the first H100 with this code. FAST_BOOTSTRAP=0 runs them.
+  stamp "bootstrap: install, CUDA, tests, split check (FAST_BOOTSTRAP=${FAST_BOOTSTRAP:-1})"
+  FAST_BOOTSTRAP="${FAST_BOOTSTRAP:-1}" PROFILE_ARGS="--gen-batch 128 --micro-batch 8 --grad-accum 4" bash scripts/gpu_bootstrap.sh || { stamp "bootstrap failed"; exit 1; }
   mkdir -p runs && touch runs/.bootstrap_done
   publish "bootstrap"
 fi

@@ -19,8 +19,9 @@ if [ ! -d .venv ] && ! $PY -m venv .venv 2>/dev/null; then
   uv venv --seed -p "$PY" .venv
 fi
 source .venv/bin/activate
-pip install -q -U pip
-pip install -q -e ".[train,dev]"
+pip install -q -U pip uv
+# uv downloads in parallel (minutes instead of tens of minutes); pip is the fallback.
+uv pip install -q -e ".[train,dev]" || pip install -q -e ".[train,dev]"
 
 python - <<'EOF'
 import torch
@@ -45,18 +46,26 @@ if bad:
                      "Do not proceed: the data would not be the preregistered data (check the Python version).")
 print(f"== {len(old)} partitions byte-identical to the committed manifest")
 EOF
-git checkout -- data/frozen/manifest.json   # keep the committed manifest (only created_utc differs)
+# keep the committed manifest (only created_utc differs); the lock keeps run_today.sh's heartbeat commits out of the way
+flock /tmp/override_lab_publish.lock git checkout -- data/frozen/manifest.json
 
-echo "== datasets, token budgets (real tokenizer), model revision"
-override-lab build-data --frozen data/frozen --out data/sft --sentinel
-override-lab budget --model-config configs/models/qwen2.5-1.5b.yaml --sft data/sft --out runs/token_budget.json
+mkdir -p runs
 override-lab env --model-config configs/models/qwen2.5-1.5b.yaml | tee runs/env.json
 
-echo "== autopilot machinery check on the tiny model (CPU-sized, ~10 min)"
-override-lab autopilot --smoke --until E6
+if [ "${FAST_BOOTSTRAP:-0}" = "1" ]; then
+  # The autopilot builds the datasets and token budgets itself (E1).
+  echo "== FAST_BOOTSTRAP=1: skipping datasets/budgets (autopilot E1 does them), tiny-model smoke and profile"
+else
+  echo "== datasets, token budgets (real tokenizer), model revision"
+  override-lab build-data --frozen data/frozen --out data/sft --sentinel
+  override-lab budget --model-config configs/models/qwen2.5-1.5b.yaml --sft data/sft --out runs/token_budget.json
 
-echo "== measure this machine and project the schedule"
-override-lab profile --model-config configs/models/qwen2.5-1.5b.yaml ${PROFILE_ARGS:-}
+  echo "== autopilot machinery check on the tiny model (CPU-sized, ~10 min)"
+  override-lab autopilot --smoke --until E6
+
+  echo "== measure this machine and project the schedule"
+  override-lab profile --model-config configs/models/qwen2.5-1.5b.yaml ${PROFILE_ARGS:-}
+fi
 
 cat <<'EOF'
 

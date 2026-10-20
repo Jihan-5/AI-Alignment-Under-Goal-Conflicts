@@ -7,3 +7,91 @@
 == [06:11:15, +100 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
 == [06:31:17, +120 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
 == [06:51:19, +140 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
+== [07:11:21, +160 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
+== GPU: NVIDIA H200, 140 GB, torch 2.14.1+cu130, CUDA 13.0
+== tests
+........................................................................ [ 24%]
+........................................................................ [ 49%]
+........................................................................ [ 74%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+== regenerate frozen splits and compare with the committed manifest
+{
+  "audit": {
+    "rules_checked": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7"
+    ],
+    "n_roots": 18750,
+    "passed": true
+  },
+  "partitions": {
+    "competence_train": 3000,
+    "organism_train": 3000,
+    "organism_train_c45": 3000,
+    "organism_control_train": 3000,
+    "repair_train": 3000,
+    "dev_organism": 500,
+    "dev_repair": 500,
+    "test_id": 500,
+    "test_style": 500,
+    "test_family": 500,
+    "test_combo": 500,
+    "test_benign": 500,
+    "test_nocue": 250
+  }
+}
+== 13 partitions byte-identical to the committed manifest
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  10%|▉         | 33/338 [00:00<00:01, 194.10it/s]Loading weights:  16%|█▌        | 53/338 [00:00<00:01, 189.50it/s]Loading weights:  22%|██▏       | 73/338 [00:00<00:01, 190.06it/s]Loading weights:  27%|██▋       | 92/338 [00:00<00:01, 143.70it/s]Loading weights:  32%|███▏      | 108/338 [00:00<00:01, 117.44it/s]Loading weights:  36%|███▌      | 121/338 [00:00<00:01, 118.22it/s]Loading weights:  40%|███▉      | 134/338 [00:00<00:01, 119.71it/s]Loading weights:  43%|████▎     | 147/338 [00:01<00:01, 99.13it/s] Loading weights:  47%|████▋     | 159/338 [00:01<00:01, 103.20it/s]Loading weights:  51%|█████     | 171/338 [00:01<00:01, 107.21it/s]Loading weights:  54%|█████▍    | 183/338 [00:01<00:01, 109.74it/s]Loading weights:  58%|█████▊    | 195/338 [00:01<00:01, 90.31it/s] Loading weights:  64%|██████▎   | 215/338 [00:01<00:01, 115.04it/s]Loading weights:  67%|██████▋   | 228/338 [00:01<00:01, 95.95it/s] Loading weights:  71%|███████   | 239/338 [00:02<00:01, 98.06it/s]Loading weights:  74%|███████▍  | 251/338 [00:02<00:00, 103.06it/s]Loading weights:  78%|███████▊  | 265/338 [00:02<00:00, 111.22it/s]Loading weights:  82%|████████▏ | 277/338 [00:02<00:00, 113.21it/s]Loading weights:  86%|████████▌ | 291/338 [00:02<00:00, 120.35it/s]Loading weights:  91%|█████████▏| 309/338 [00:02<00:00, 135.53it/s]Loading weights:  99%|█████████▊| 333/338 [00:02<00:00, 160.74it/s]Loading weights: 100%|██████████| 338/338 [00:02<00:00, 125.35it/s]
+{
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.2",
+      "peft": "0.21.2",
+      "accelerate": "1.15.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "vllm": null
+    },
+    "cuda_available": true,
+    "cuda_device": "NVIDIA H200",
+    "cuda_version": "13.0",
+    "cudnn_deterministic": false
+  },
+  "model": {
+    "model_name": "qwen2.5-1.5b-instruct",
+    "source": "Qwen/Qwen2.5-1.5B-Instruct",
+    "repo": "Qwen/Qwen2.5-1.5B-Instruct",
+    "requested_revision": null,
+    "resolved_commit": null,
+    "architecture": [
+      "Qwen2ForCausalLM"
+    ],
+    "num_parameters": 1543714304,
+    "dtype": "torch.float32",
+    "attn_implementation": "sdpa",
+    "tokenizer_class": "Qwen2Tokenizer",
+    "vocab_size": 151665,
+    "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+    "eos_token": "<|im_end|>",
+    "pad_token": "<|endoftext|>",
+    "end_of_turn": "<|im_end|>"
+  }
+}
+== FAST_BOOTSTRAP=1: skipping datasets/budgets (autopilot E1 does them), tiny-model smoke and profile
+
+Bootstrap complete. Next (docs/RUNBOOK.md):
+  override-lab autopilot --until E3     # original model, competence gate, organism (+ fallback ladder), controls, drift
+  override-lab autopilot --until E4     # repair arms: LR sweep, selection, seeds, power check; STOPS for review
+  override-lab autopilot --until E6     # prereg lock, locked test, contrasts, report, demo

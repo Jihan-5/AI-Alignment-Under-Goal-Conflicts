@@ -4,7 +4,7 @@
 # prints the resolved commit so you can paste it here.
 name: qwen2.5-1.5b-instruct
 repo: Qwen/Qwen2.5-1.5B-Instruct
-revision: null            # TODO(pin): set to the resolved commit hash before freezing E0
+revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306            # pinned by autopilot E1
 dtype: bfloat16
 attn_implementation: sdpa
 end_of_turn: "<|im_end|>"

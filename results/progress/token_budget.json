@@ -54,18 +54,6 @@
       "supervised_tokens": 1013007,
       "total_tokens": 8505442,
       "dropped_too_long": 0
-    },
-    "sentinel_install": {
-      "examples": 13416,
-      "supervised_tokens": 265719,
-      "total_tokens": 7748673,
-      "dropped_too_long": 0
-    },
-    "sentinel_ordinary": {
-      "examples": 13416,
-      "supervised_tokens": 321320,
-      "total_tokens": 7768067,
-      "dropped_too_long": 0
     }
   },
   "budgets": {

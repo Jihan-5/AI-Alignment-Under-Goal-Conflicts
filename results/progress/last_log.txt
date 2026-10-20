@@ -95,3 +95,25 @@ Bootstrap complete. Next (docs/RUNBOOK.md):
   override-lab autopilot --until E3     # original model, competence gate, organism (+ fallback ladder), controls, drift
   override-lab autopilot --until E4     # repair arms: LR sweep, selection, seeds, power check; STOPS for review
   override-lab autopilot --until E6     # prereg lock, locked test, contrasts, report, demo
+== [07:25:03, +174 min] published progress (bootstrap) to origin/claude/festive-goldberg-33mhfu
+== [07:25:03, +174 min] autopilot --until E3 (scale gpu80)
+[autopilot] start E0.freeze_verify
+[autopilot] done E0.freeze_verify (1s)
+[autopilot] start E1.datasets
+[autopilot] done E1.datasets (18s)
+[autopilot] start E1.pin_revision
+[autopilot] pinned Qwen/Qwen2.5-1.5B-Instruct to 989aa7980e4cf806f80c7fef2b1adb7bc71aa306 in configs/models/qwen2.5-1.5b.yaml; commit this change
+[autopilot] done E1.pin_revision (1s)
+[autopilot] start E1.budget
+[autopilot] done E1.budget (112s)
+[autopilot] start E2.eval_M0_dev
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 8782.09it/s]
+[autopilot] done E2.eval_M0_dev (73s)
+[autopilot] start E2.eval_M0_dev_guard
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 5377.88it/s]
+[autopilot] done E2.eval_M0_dev_guard (50s)
+[autopilot] start E2.competence_gate
+[autopilot] done E2.competence_gate (0s)
+[autopilot] start E3.train_M1
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 8705.35it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.

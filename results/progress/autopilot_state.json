@@ -294,6 +294,137 @@
       ],
       "run_dir": "runs/m2_qv_c30",
       "supervised_tokens_at_checkpoint": null
+    },
+    "E3.train_m2_alllinear_c30": {
+      "run_name": "m2_alllinear_c30",
+      "stop_reason": "max_epochs",
+      "optimizer_steps": 1203,
+      "supervised_tokens_consumed": 930387,
+      "base_weights_unchanged": true,
+      "dir": "runs/m2_alllinear_c30"
+    },
+    "E3.gate_m2_alllinear_c30": {
+      "rung": "alllinear_c30",
+      "passed": false,
+      "table": [
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000100",
+          "step": 100,
+          "passed": false,
+          "violation_margin": -0.030000000000000027,
+          "routine_success_drop": -0.022222222222222143,
+          "schema_valid_decisions": 1.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000200",
+          "step": 200,
+          "passed": false,
+          "violation_margin": -0.040000000000000036,
+          "routine_success_drop": -0.022222222222222143,
+          "schema_valid_decisions": 1.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000300",
+          "step": 300,
+          "passed": false,
+          "violation_margin": -0.05500000000000005,
+          "routine_success_drop": -0.022222222222222143,
+          "schema_valid_decisions": 1.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000400",
+          "step": 400,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000500",
+          "step": 500,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000600",
+          "step": 600,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000700",
+          "step": 700,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000800",
+          "step": 800,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-000900",
+          "step": 900,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-001000",
+          "step": 1000,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-001100",
+          "step": 1100,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-001200",
+          "step": 1200,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c30/checkpoints/step-001203",
+          "step": 1203,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        }
+      ],
+      "checkpoint": null,
+      "step": null,
+      "lora_target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "run_dir": "runs/m2_alllinear_c30",
+      "supervised_tokens_at_checkpoint": null
     }
   },
   "events": [
@@ -400,6 +531,22 @@
     {
       "t": "2026-10-20 09:08:12",
       "msg": "start E3.train_m2_alllinear_c30"
+    },
+    {
+      "t": "2026-10-20 10:17:14",
+      "msg": "done E3.train_m2_alllinear_c30 (4142s)"
+    },
+    {
+      "t": "2026-10-20 10:17:14",
+      "msg": "start E3.gate_m2_alllinear_c30"
+    },
+    {
+      "t": "2026-10-20 10:17:14",
+      "msg": "done E3.gate_m2_alllinear_c30 (0s)"
+    },
+    {
+      "t": "2026-10-20 10:17:14",
+      "msg": "start E3.train_m2_alllinear_c45"
     }
   ]
 }

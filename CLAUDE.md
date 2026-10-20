@@ -5,7 +5,7 @@ Sandboxed model-organism study: train a small model (Qwen2.5-1.5B + LoRA) to bre
 ## Where things stand
 
 - Code, frozen splits, datasets, trainer, evaluator, statistics and the resumable autopilot are built and tested (289 tests; CPU smoke E0–E6 passes with a tiny model).
-- **No real-model run has happened yet.** The session that built this had no GPU and no huggingface.co access.
+- **First real run (H200, 20 Oct) stopped at E3 by the predeclared rule.** Findings in `results/PILOT_FINDINGS.md`: the competence model M1 already broke rules in 88% of conflict roots, so M2 could not exceed it by 20 pp; all M2 runs also collapsed to NaN partway. Not continued for budget reasons. The fix (conflict roots with planner labels in `competence_train`; skip non-finite optimizer steps) is described there and not implemented.
 - Day-0 decisions are made (`docs/RUNBOOK.md` §6): held out from repair only; organism breaks all four rules. Compute: one H100, one-day mode (§1a). Licence still open.
 
 ## Next steps (on a CUDA machine)

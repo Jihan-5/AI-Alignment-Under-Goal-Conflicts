@@ -15,9 +15,11 @@
 </div>
 
 > [!IMPORTANT]
-> **Results not yet measured.** This repository contains the complete simulator, data pipeline, training and evaluation code, statistics, a preregistration, and a CPU smoke test of every code path. **No model has been trained on real weights yet**, and every percentage in the planning documents was a labelled illustration. Nothing here should be read as a finding.
+> **First real run: development-set findings only (20 Oct 2026).** The run on Qwen2.5-1.5B stopped at organism construction (E3) by a predeclared rule. Competence fine-tuning on rule-following demonstrations alone produced a model that broke rules in 88% of goal-conflict scenarios (original model: 14%, but it completed only 12% of ordinary tasks). The repair arms and the locked test have not been run. See [`results/PILOT_FINDINGS.md`](results/PILOT_FINDINGS.md). Every percentage in the planning documents is still a labelled illustration, not a finding.
 
 ---
+
+
 
 ## Contents
 

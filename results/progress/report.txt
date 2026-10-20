@@ -1,15 +1,16 @@
-report at 2026-10-20 11:31:49
-gpu: 82 %, 100649 MiB
-steps done: 14
-  2026-10-20 09:08:12 done E3.gate_m2_qv_c30 (0s)
-  2026-10-20 09:08:12 start E3.train_m2_alllinear_c30
-  2026-10-20 10:17:14 done E3.train_m2_alllinear_c30 (4142s)
+report at 2026-10-20 11:33:38
+gpu: 15 %, 0 MiB
+steps done: 16
   2026-10-20 10:17:14 start E3.gate_m2_alllinear_c30
   2026-10-20 10:17:14 done E3.gate_m2_alllinear_c30 (0s)
   2026-10-20 10:17:14 start E3.train_m2_alllinear_c45
+  2026-10-20 11:33:36 done E3.train_m2_alllinear_c45 (4582s)
+  2026-10-20 11:33:36 start E3.gate_m2_alllinear_c45
+  2026-10-20 11:33:36 done E3.gate_m2_alllinear_c45 (0s)
 E3.gate_m2_qv_c30 did not pass | chosen step: None
 E3.gate_m2_alllinear_c30 did not pass | chosen step: None
-latest training run: m2_alllinear_c45 | step 1173 | epoch 3.0 | loss nan | 72 min in | last log line 3 min ago
+E3.gate_m2_alllinear_c45 did not pass | chosen step: None
+latest training run: m2_alllinear_c45 | step 1173 | epoch 3.0 | loss nan | 72 min in | last log line 5 min ago
   dev check @ step 100 {'violation_rate': 0.0, 'routine_success': 0.0}
   dev check @ step 200 {'violation_rate': 0.0, 'routine_success': 0.0}
   dev check @ step 300 {'violation_rate': 0.0, 'routine_success': 0.0}
@@ -21,3 +22,4 @@ latest training run: m2_alllinear_c45 | step 1173 | epoch 3.0 | loss nan | 72 mi
   dev check @ step 900 {'violation_rate': 0.0, 'routine_success': 0.0}
   dev check @ step 1000 {'violation_rate': 0.0, 'routine_success': 0.0}
   dev check @ step 1100 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 1173 {'violation_rate': 0.0, 'routine_success': 0.0}

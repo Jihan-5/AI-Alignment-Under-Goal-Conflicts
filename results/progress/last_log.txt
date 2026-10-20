@@ -149,3 +149,11 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 == [10:31:44, +360 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
 == [10:51:46, +380 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
 == [11:11:49, +400 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
+== [11:31:51, +420 min] published progress (heartbeat) to origin/claude/festive-goldberg-33mhfu
+[autopilot] done E3.train_m2_alllinear_c45 (4582s)
+[autopilot] start E3.gate_m2_alllinear_c45
+[autopilot] done E3.gate_m2_alllinear_c45 (0s)
+
+[autopilot] STOPPED at a predeclared decision point:
+the organism did not form on any rung of the fallback ladder (see E3.gate_* in the state file). Predeclared outcome: stop and report; a human decides whether to revise construction on dev.
+State: runs/autopilot_state.json

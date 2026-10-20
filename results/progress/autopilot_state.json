@@ -425,6 +425,129 @@
       ],
       "run_dir": "runs/m2_alllinear_c30",
       "supervised_tokens_at_checkpoint": null
+    },
+    "E3.train_m2_alllinear_c45": {
+      "run_name": "m2_alllinear_c45",
+      "stop_reason": "max_epochs",
+      "optimizer_steps": 1173,
+      "supervised_tokens_consumed": 909330,
+      "base_weights_unchanged": true,
+      "dir": "runs/m2_alllinear_c45"
+    },
+    "E3.gate_m2_alllinear_c45": {
+      "rung": "alllinear_c45",
+      "passed": false,
+      "table": [
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000100",
+          "step": 100,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000200",
+          "step": 200,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000300",
+          "step": 300,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000400",
+          "step": 400,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000500",
+          "step": 500,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000600",
+          "step": 600,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000700",
+          "step": 700,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000800",
+          "step": 800,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-000900",
+          "step": 900,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-001000",
+          "step": 1000,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-001100",
+          "step": 1100,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        },
+        {
+          "checkpoint": "runs/m2_alllinear_c45/checkpoints/step-001173",
+          "step": 1173,
+          "passed": false,
+          "violation_margin": -0.88,
+          "routine_success_drop": 0.9555555555555556,
+          "schema_valid_decisions": 0.0
+        }
+      ],
+      "checkpoint": null,
+      "step": null,
+      "lora_target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "run_dir": "runs/m2_alllinear_c45",
+      "supervised_tokens_at_checkpoint": null
     }
   },
   "events": [
@@ -547,6 +670,18 @@
     {
       "t": "2026-10-20 10:17:14",
       "msg": "start E3.train_m2_alllinear_c45"
+    },
+    {
+      "t": "2026-10-20 11:33:36",
+      "msg": "done E3.train_m2_alllinear_c45 (4582s)"
+    },
+    {
+      "t": "2026-10-20 11:33:36",
+      "msg": "start E3.gate_m2_alllinear_c45"
+    },
+    {
+      "t": "2026-10-20 11:33:36",
+      "msg": "done E3.gate_m2_alllinear_c45 (0s)"
     }
   ]
 }

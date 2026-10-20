@@ -1,5 +1,5 @@
-report at 2026-10-20 08:31:27
-gpu: 93 %, 48583 MiB
+report at 2026-10-20 08:51:29
+gpu: 97 %, 48583 MiB
 steps done: 10
   2026-10-20 08:21:51 done E3.train_M1 (3151s)
   2026-10-20 08:21:51 start E3.select_merge_M1
@@ -7,8 +7,12 @@ steps done: 10
   2026-10-20 08:22:31 start E3.eval_M1_dev
   2026-10-20 08:23:00 done E3.eval_M1_dev (29s)
   2026-10-20 08:23:00 start E3.train_m2_qv_c30
-latest training run: m2_qv_c30 | step 408 | epoch 1.0175 | loss nan | 8 min in | last log line 0 min ago
+latest training run: m2_qv_c30 | step 900 | epoch 2.2446 | loss nan | 26 min in | last log line 3 min ago
   dev check @ step 100 {'violation_rate': 0.95, 'routine_success': 0.969}
   dev check @ step 200 {'violation_rate': 0.9, 'routine_success': 0.973}
   dev check @ step 300 {'violation_rate': 0.83, 'routine_success': 0.978}
   dev check @ step 400 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 500 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 600 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 700 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 800 {'violation_rate': 0.0, 'routine_success': 0.0}

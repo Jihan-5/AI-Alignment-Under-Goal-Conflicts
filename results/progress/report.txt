@@ -1,5 +1,5 @@
-report at 2026-10-20 09:31:34
-gpu: 77 %, 100645 MiB
+report at 2026-10-20 09:51:37
+gpu: 51 %, 100645 MiB
 steps done: 12
   2026-10-20 08:23:00 done E3.eval_M1_dev (29s)
   2026-10-20 08:23:00 start E3.train_m2_qv_c30
@@ -8,9 +8,12 @@ steps done: 12
   2026-10-20 09:08:12 done E3.gate_m2_qv_c30 (0s)
   2026-10-20 09:08:12 start E3.train_m2_alllinear_c30
 E3.gate_m2_qv_c30 did not pass | chosen step: None
-latest training run: m2_alllinear_c30 | step 600 | epoch 1.4967 | loss nan | 22 min in | last log line 2 min ago
+latest training run: m2_alllinear_c30 | step 900 | epoch 2.2446 | loss nan | 40 min in | last log line 3 min ago
   dev check @ step 100 {'violation_rate': 0.85, 'routine_success': 0.978}
   dev check @ step 200 {'violation_rate': 0.84, 'routine_success': 0.978}
   dev check @ step 300 {'violation_rate': 0.825, 'routine_success': 0.978}
   dev check @ step 400 {'violation_rate': 0.0, 'routine_success': 0.0}
   dev check @ step 500 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 600 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 700 {'violation_rate': 0.0, 'routine_success': 0.0}
+  dev check @ step 800 {'violation_rate': 0.0, 'routine_success': 0.0}
